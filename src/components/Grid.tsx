@@ -1,6 +1,7 @@
+import { UNIT_SIZE } from "../constants/sudoku";
+
 function Grid() {
 
-    const UNIT_SIZE = 9;
     const indices = Array.from({ length: UNIT_SIZE }, (_, index) => index);
 
     return (
@@ -13,7 +14,7 @@ function Grid() {
                 </div>
             ))}
         </div>
-    )
+    );
 }
 
 export default Grid;
