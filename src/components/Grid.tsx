@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
+import { createPuzzle } from "../api/puzzleApi";
 
 function Grid() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
@@ -8,15 +8,12 @@ function Grid() {
     useEffect(() => {
         const fetchPuzzle = async () => {
             try {
-                const response = await axios.post<PuzzleResponse>(
-                    "http://localhost:8080/api/puzzles?difficulty=EASY"
-                );
-                setPuzzle(response.data);
+                setPuzzle(await createPuzzle("EASY"));
             } catch (error) {
                 console.error("Failed to fetch puzzle: ", error);
             }
         };
-        
+
         fetchPuzzle();
     }, []);
 
