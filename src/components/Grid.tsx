@@ -1,32 +1,47 @@
-import { useState } from "react";
-// import { GRID_SIZE } from "../constants/sudoku";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 
 function Grid() {
+    const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
 
-    const EASY_GRID: number[][] = [
-        [4, 1, 0, 0, 6, 0, 0, 7, 0],
-        [0, 0, 3, 0, 8, 5, 0, 0, 9],
-        [0, 2, 0, 3, 7, 0, 5, 0, 1],
-        [0, 3, 0, 6, 0, 9, 2, 5, 0],
-        [6, 0, 0, 5, 0, 1, 0, 0, 0],
-        [0, 0, 9, 0, 2, 0, 0, 0, 3],
-        [0, 0, 6, 2, 0, 0, 7, 4, 5],
-        [0, 0, 0, 4, 0, 6, 8, 0, 0],
-        [2, 8, 4, 0, 0, 0, 1, 9, 6],
-    ];
+    useEffect(() => {
+        const fetchPuzzle = async () => {
+            try {
+                const response = await axios.post<PuzzleResponse>(
+                    "http://localhost:8080/api/puzzles?difficulty=EASY"
+                );
+                setPuzzle(response.data);
+            } catch (error) {
+                console.error("Failed to fetch puzzle: ", error);
+            }
+        };
+        
+        fetchPuzzle();
+    }, []);
 
-    const [puzzle] = useState(EASY_GRID);
-
-    // const indices = Array.from({ length: GRID_SIZE }, (_, index) => index);
+    if (puzzle === null) {
+        return <div>Loading...</div>
+    }
 
     return (
         <div className="grid">
-            {puzzle.map((rows, row) => (
-                rows.map((value, col) => (
-                    <div className="cell" key={`${row}-${col}`}>
-                        {value === 0 ? "" : value}
-                    </div>
-                ))
+            {puzzle.cells.map((rows, row) => (
+                rows.map((cell, col) => {
+                    const boxRight = col === 2 || col === 5;
+                    const boxBottom = row === 2 || row === 5;
+                    const className = [
+                        "cell",
+                        cell.given ? "given" : "",
+                        boxRight ? "box-right" : "",
+                        boxBottom ? "box-bottom" : "",
+                    ].filter(Boolean).join(" ");
+                    return (
+                        <div className={className} key={`${row}-${col}`}>
+                            {cell.value === 0 ? "" : cell.value}
+                        </div>
+                    );
+                })
             ))}
         </div>
     );

@@ -8,6 +8,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr); /* 9 boxes width */
+  grid-template-rows: repeat(9, 1fr); /* 9 boxes height */
   width: 450px;
   max-width: 100%;
   aspect-ratio: 1 / 1;
@@ -23,4 +24,12 @@
   border: 1px solid var(--border); /* thin cell divisions */
   font-size: 1.5rem;
   user-select: none;
+}
+
+.box-right {
+  border-right: 2px solid var(--text-h);
+}
+
+.box-bottom {
+  border-bottom: 2px solid var(--text-h);
 }
