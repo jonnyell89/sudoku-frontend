@@ -1,32 +1,18 @@
-import { useEffect, useState } from "react";
 import type { Cell } from "../interfaces/Cell";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
-import { createPuzzle } from "../api/puzzleApi";
 
-function Grid() {
-    const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
-    const [selected, setSelected] = useState<Cell | null>(null);
+interface GridProps {
+    puzzle: PuzzleResponse;
+    selected: Cell | null;
+    setSelected: (cell: Cell | null) => void;
+}
 
-    useEffect(() => {
-        const fetchPuzzle = async () => {
-            try {
-                setPuzzle(await createPuzzle("EASY"));
-            } catch (error) {
-                console.error("Failed to fetch puzzle: ", error);
-            }
-        };
-
-        fetchPuzzle();
-    }, []);
+function Grid({ puzzle, selected, setSelected }: GridProps) {
 
     const handleClick = (row: number, col: number, given: boolean) => {
         if (!given) {
             setSelected({ row, col });
         }
-    }
-
-    if (puzzle === null) {
-        return <div>Loading...</div>
     }
 
     return (
