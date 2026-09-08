@@ -26,6 +26,14 @@
   user-select: none;
 }
 
+.cell.selected {
+  background-color: var(--border);
+}
+
+.cell:not(.given) {
+  cursor: pointer;
+}
+
 .box-right {
   border-right: 2px solid var(--text-h);
 }
