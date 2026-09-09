@@ -5,11 +5,11 @@ import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import { createPuzzle } from "../api/puzzleApi";
 import Grid from "./Grid";
 import GuessSelector from "./GuessSelector";
+import updatePuzzle from "../utils/updatePuzzle";
 
 function Game() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
-    const [correctGuess, setCorrectGuess] = useState<Guess | null>(null);
     
     useEffect(() => {
         const fetchPuzzle = async () => {
@@ -19,11 +19,14 @@ function Game() {
                 console.error(`Failed to fetch puzzle: ${error}`);
             }
         };
-
         fetchPuzzle();
     }, []);
 
     if (puzzle === null) return <div>Loading...</div>;
+
+    const applyCorrectGuess = (guess: Guess) => {
+        setPuzzle(updatePuzzle(puzzle, guess))
+    }
 
     return (
         <div className="game">
@@ -35,7 +38,7 @@ function Game() {
             <GuessSelector
                 id={puzzle.id}
                 selectedCell={selectedCell}
-                setCorrectGuess={setCorrectGuess}
+                onCorrectGuess={applyCorrectGuess}
             />
         </div>
     )

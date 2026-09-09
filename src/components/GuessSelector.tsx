@@ -9,10 +9,10 @@ import { makeGuess } from "../api/puzzleApi";
 interface GuessSelectorProps {
     id: number;
     selectedCell: Cell | null;
-    setCorrectGuess: (correctGuess: Guess | null) => void;
+    onCorrectGuess: (correctGuess: Guess) => void;
 }
 
-function GuessSelector({ id, selectedCell, setCorrectGuess }: GuessSelectorProps) {
+function GuessSelector({ id, selectedCell, onCorrectGuess }: GuessSelectorProps) {
 
     const [selectedGuess, setSelectedGuess] = useState<number | null>(null);
 
@@ -21,11 +21,19 @@ function GuessSelector({ id, selectedCell, setCorrectGuess }: GuessSelectorProps
     const handleClick = async (guess: number) => {
         if (selectedCell) {
             setSelectedGuess(guess);
-            const guessRequest: GuessRequest = { row: selectedCell.row, col: selectedCell.col, value: guess };
+            const guessRequest: GuessRequest = { 
+                row: selectedCell.row, 
+                col: selectedCell.col, 
+                value: guess 
+            };
             try {
                 const guessResponse: GuessResponse = await makeGuess(id, guessRequest);
                 if (guessResponse.correct) {
-                    setCorrectGuess({ row: guessRequest.row, col: guessRequest.col, value: guessRequest.value })
+                    onCorrectGuess({ 
+                        row: guessRequest.row, 
+                        col: guessRequest.col, 
+                        value: guessRequest.value 
+                    });
                 }
             } catch (error) {
                 console.error(`Failed to submit guess: ${error}`);

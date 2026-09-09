@@ -11,3 +11,5 @@ function gridToBoxGridMapper(grid: number[][]): number[][] {
     }
     return boxGrid;
 }
+
+export default gridToBoxGridMapper;
