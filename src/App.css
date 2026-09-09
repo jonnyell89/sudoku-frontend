@@ -26,7 +26,7 @@
   user-select: none;
 }
 
-.cell.selected {
+.cell.selected-cell {
   background-color: var(--border);
 }
 
@@ -40,4 +40,32 @@
 
 .box-bottom {
   border-bottom: 2px solid var(--text-h);
+}
+
+.guess-selector {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  width: 450px;
+  max-width: 100%;
+  aspect-ratio: 9 / 1;
+  margin: 2rem auto;
+  border: 2px solid var(--text-h);
+}
+
+.guess {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  font-size: 1.5rem;
+  user-select: none;
+}
+
+.guess.active {
+  cursor: pointer;
+}
+
+.guess.selected-guess {
+  background-color: var(--border);  
 }

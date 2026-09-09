@@ -3,10 +3,11 @@ import type { Cell } from "../interfaces/Cell";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import { createPuzzle } from "../api/puzzleApi";
 import Grid from "./Grid";
+import GuessSelector from "./GuessSelector";
 
 function Game() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
-    const [selected, setSelected] = useState<Cell | null>(null);
+    const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
     
     useEffect(() => {
         const fetchPuzzle = async () => {
@@ -26,8 +27,11 @@ function Game() {
         <div className="game">
             <Grid
                 puzzle={puzzle}
-                selected={selected}
-                setSelected={setSelected}
+                selectedCell={selectedCell}
+                setSelectedCell={setSelectedCell}
+            />
+            <GuessSelector
+                selectedCell={selectedCell}
             />
         </div>
     )
