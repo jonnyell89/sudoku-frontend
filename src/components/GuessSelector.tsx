@@ -22,10 +22,11 @@ function GuessSelector({ selectedCell }: GuessSelectorProps) {
     return(
         <div className="guess-selector">
             {guesses.map((guess) => {
+                const isSelectedGuess = guess === selectedGuess;
                 const className = [
                     "guess",
                     selectedCell ? "active" : "",
-                    selectedGuess ? "selected-guess" : "",
+                    isSelectedGuess ? "selected-guess" : "",
                 ].filter(Boolean).join(" ");
                 return (
                     <div 
