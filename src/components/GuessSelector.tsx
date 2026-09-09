@@ -1,21 +1,35 @@
 import { useState } from "react";
 import { GRID_SIZE } from "../constants/sudoku";
 import type { Cell } from "../interfaces/Cell";
+import type { Guess } from "../interfaces/Guess";
+import type { GuessRequest } from "../interfaces/GuessRequest";
+import type { GuessResponse } from "../interfaces/GuessResponse";
+import { makeGuess } from "../api/puzzleApi";
 
 interface GuessSelectorProps {
+    id: number;
     selectedCell: Cell | null;
+    setCorrectGuess: (correctGuess: Guess | null) => void;
 }
 
-function GuessSelector({ selectedCell }: GuessSelectorProps) {
+function GuessSelector({ id, selectedCell, setCorrectGuess }: GuessSelectorProps) {
 
     const [selectedGuess, setSelectedGuess] = useState<number | null>(null);
 
     const guesses: number[] = Array.from({ length: GRID_SIZE }, (_, index) => index + 1);
 
-    const handleClick = (guess: number) => {
+    const handleClick = async (guess: number) => {
         if (selectedCell) {
             setSelectedGuess(guess);
-            // makeGuess call to API
+            const guessRequest: GuessRequest = { row: selectedCell.row, col: selectedCell.col, value: guess };
+            try {
+                const guessResponse: GuessResponse = await makeGuess(id, guessRequest);
+                if (guessResponse.correct) {
+                    setCorrectGuess({ row: guessRequest.row, col: guessRequest.col, value: guessRequest.value })
+                }
+            } catch (error) {
+                console.error(`Failed to submit guess: ${error}`);
+            }
         }
     }
 
