@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Cell } from "../interfaces/Cell";
+import type { SelectedCell } from "../interfaces/SelectedCell";
 import type { Guess } from "../interfaces/Guess";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import { createPuzzle } from "../api/puzzleApi";
@@ -9,7 +9,7 @@ import updatePuzzle from "../utils/updatePuzzle";
 
 function Game() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
-    const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
+    const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     
     useEffect(() => {
         const fetchPuzzle = async () => {

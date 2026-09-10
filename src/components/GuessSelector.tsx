@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GRID_SIZE } from "../constants/sudoku";
-import type { Cell } from "../interfaces/Cell";
+import type { SelectedCell } from "../interfaces/SelectedCell";
 import type { Guess } from "../interfaces/Guess";
 import type { GuessRequest } from "../interfaces/GuessRequest";
 import type { GuessResponse } from "../interfaces/GuessResponse";
@@ -8,7 +8,7 @@ import { makeGuess } from "../api/puzzleApi";
 
 interface GuessSelectorProps {
     id: number;
-    selectedCell: Cell | null;
+    selectedCell: SelectedCell | null;
     onCorrectGuess: (correctGuess: Guess) => void;
 }
 
