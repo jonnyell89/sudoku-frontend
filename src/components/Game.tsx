@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import type { SelectedCell } from "../interfaces/SelectedCell";
-import type { Guess } from "../interfaces/Guess";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
-import { createPuzzle } from "../api/puzzleApi";
+import type { GuessResponse } from "../interfaces/GuessResponse";
+import { createPuzzle, makeGuess } from "../api/puzzleApi";
 import Grid from "./Grid";
 import GuessSelector from "./GuessSelector";
+import type { GuessRequest } from "../interfaces/GuessRequest";
 import updatePuzzle from "../utils/updatePuzzle";
 
 function Game() {
@@ -24,8 +25,21 @@ function Game() {
 
     if (puzzle === null) return <div>Loading...</div>;
 
-    const applyCorrectGuess = (guess: Guess) => {
-        setPuzzle(updatePuzzle(puzzle, guess))
+    const handleGuess = async (guess: number) => {
+        if (!selectedCell) return;
+        const guessRequest: GuessRequest = {
+            row: selectedCell?.row,
+            col: selectedCell?.col,
+            value: guess,
+        };
+        try {
+            const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
+            if (guessResponse.correct) {
+                setPuzzle((prev) => (prev ? updatePuzzle(prev, guessRequest) : prev));
+            }
+        } catch (error) {
+            console.error(`Failed to submit guess: ${error}`);
+        }
     }
 
     return (
@@ -36,9 +50,8 @@ function Game() {
                 setSelectedCell={setSelectedCell}
             />
             <GuessSelector
-                id={puzzle.id}
                 selectedCell={selectedCell}
-                onCorrectGuess={applyCorrectGuess}
+                onGuess={handleGuess}
             />
         </div>
     )
