@@ -1,32 +1,28 @@
-import type { SelectedCell } from "../interfaces/SelectedCell";
-
 interface CellProps {
-    row: number;
-    col: number;
     value: number;
     given: boolean;
-    selectedCell: SelectedCell | null;
-    setSelectedCell: (selectedCell: SelectedCell | null) => void;
+    boxRight: boolean;
+    boxBottom: boolean;
+    isSelectedCell: boolean;
+    onSelect: () => void;
 }
 
-function Cell({ row, col, value, given, selectedCell, setSelectedCell }: CellProps) {
+function Cell({ value, given, boxRight, boxBottom, isSelectedCell, onSelect }: CellProps) {
 
     const handleClick = () => {
         if (!given) {
-            setSelectedCell({ row, col });
+            onSelect();
         }
     }
-
-    const isSelectedCell = selectedCell?.row === row && selectedCell?.col === col;
-    const boxRight = col === 2 || col === 5; // refers to box styling
-    const boxBottom = row === 2 || row === 5; // refers to box styling    
+      
     const className = [
         "cell",
         given ? "given" : "",
-        isSelectedCell ? "selected-cell" : "",
         boxRight ? "box-right" : "", // refers to box styling
         boxBottom ? "box-bottom" : "", // refers to box styling
+        isSelectedCell ? "selected-cell" : "",
     ].filter(Boolean).join(" ");
+    
     return (
         <div
             className={className}
