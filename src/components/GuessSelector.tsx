@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GRID_SIZE } from "../constants/sudoku";
+import { MAX_VALUE } from "../constants/sudoku";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 
 interface GuessSelectorProps {
@@ -11,9 +11,9 @@ function GuessSelector({ selectedCell, onGuess }: GuessSelectorProps) {
 
     const [selectedGuess, setSelectedGuess] = useState<number | null>(null);
 
-    const guesses: number[] = Array.from({ length: GRID_SIZE }, (_, index) => index + 1);
+    const guesses: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
 
-    const handleClick = async (guess: number) => {
+    const handleClick = (guess: number) => {
         if (selectedCell) {
             setSelectedGuess(guess);
             onGuess(guess);
@@ -30,9 +30,9 @@ function GuessSelector({ selectedCell, onGuess }: GuessSelectorProps) {
                     isSelectedGuess ? "selected-guess" : "",
                 ].filter(Boolean).join(" ");
                 return (
-                    <div 
-                        className={className}
+                    <div
                         key={guess}
+                        className={className}
                         onClick={() => handleClick(guess)}
                     >
                         {guess}

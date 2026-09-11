@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import type { GuessResponse } from "../interfaces/GuessResponse";
@@ -7,24 +7,22 @@ import Grid from "./Grid";
 import GuessSelector from "./GuessSelector";
 import type { GuessRequest } from "../interfaces/GuessRequest";
 import updatePuzzle from "../utils/updatePuzzle";
+import DifficultySelector from "./DifficultySelector";
 
 function Game() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    // const [isLoading, setIsLoading] = useState<boolean>(false);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
-    
-    // useEffect(() => {
-    //     const fetchPuzzle = async () => {
-    //         try {
-    //             setPuzzle(await createPuzzle("EASY"));
-    //         } catch (error) {
-    //             console.error(`Failed to fetch puzzle: ${error}`);
-    //         }
-    //     };
-    //     fetchPuzzle();
-    // }, []);
 
-    // if (puzzle === null) return <div>Loading...</div>;
+    const handleDifficulty = async (difficulty: string) => {
+        try {
+            // setIsLoading(true);
+            setPuzzle(await createPuzzle(difficulty));
+            // setIsLoading(false);
+        } catch (error) {
+            console.error(`Failed to fetch puzzle: ${error}`);
+        }
+    }
 
     const handleGuess = async (guess: number) => {
         if (puzzle === null) return;
@@ -54,6 +52,9 @@ function Game() {
             <GuessSelector
                 selectedCell={selectedCell}
                 onGuess={handleGuess}
+            />
+            <DifficultySelector
+                onDifficulty={handleDifficulty}
             />
         </div>
     )

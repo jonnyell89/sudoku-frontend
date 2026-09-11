@@ -26,6 +26,7 @@ function Grid({ puzzle, selectedCell, setSelectedCell }: GridProps) {
                     ].filter(Boolean).join(" ");
                     return (
                         <div
+                            // key?
                             className={className}
                         >
                             {""}
