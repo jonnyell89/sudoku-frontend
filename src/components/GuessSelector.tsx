@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { MAX_VALUE } from "../constants/sudoku";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 
