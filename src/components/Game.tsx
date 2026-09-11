@@ -10,22 +10,24 @@ import updatePuzzle from "../utils/updatePuzzle";
 
 function Game() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     
-    useEffect(() => {
-        const fetchPuzzle = async () => {
-            try {
-                setPuzzle(await createPuzzle("EASY"));
-            } catch (error) {
-                console.error(`Failed to fetch puzzle: ${error}`);
-            }
-        };
-        fetchPuzzle();
-    }, []);
+    // useEffect(() => {
+    //     const fetchPuzzle = async () => {
+    //         try {
+    //             setPuzzle(await createPuzzle("EASY"));
+    //         } catch (error) {
+    //             console.error(`Failed to fetch puzzle: ${error}`);
+    //         }
+    //     };
+    //     fetchPuzzle();
+    // }, []);
 
-    if (puzzle === null) return <div>Loading...</div>;
+    // if (puzzle === null) return <div>Loading...</div>;
 
     const handleGuess = async (guess: number) => {
+        if (puzzle === null) return;
         if (!selectedCell) return;
         const guessRequest: GuessRequest = {
             row: selectedCell?.row,
