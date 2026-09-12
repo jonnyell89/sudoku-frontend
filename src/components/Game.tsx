@@ -14,6 +14,7 @@ import GuessSelector from "./GuessSelector";
 function Game() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
+    const [selectedGuess, setSelectedGuess] = useState<number | null>(null);
 
     const handleDifficulty = async (difficulty: string) => {
         try {
@@ -24,8 +25,7 @@ function Game() {
     }
 
     const handleGuess = async (guess: number) => {
-        if (puzzle === null) return;
-        if (!selectedCell) return;
+        if (puzzle === null || !selectedCell) return;
         const guessRequest: GuessRequest = {
             row: selectedCell?.row,
             col: selectedCell?.col,
@@ -35,6 +35,10 @@ function Game() {
             const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
             if (guessResponse.correct) {
                 setPuzzle((prev) => (prev ? updatePuzzle(prev, guessRequest) : prev));
+                setSelectedCell(null);
+                setSelectedGuess(null);
+            } else {
+                setSelectedGuess(guess);
             }
         } catch (error) {
             console.error(`Failed to submit guess: ${error}`);
@@ -49,9 +53,11 @@ function Game() {
                 cells={cells}
                 selectedCell={selectedCell}
                 setSelectedCell={setSelectedCell}
+                setSelectedGuess={setSelectedGuess}
             />
             <GuessSelector
                 selectedCell={selectedCell}
+                selectedGuess={selectedGuess}
                 onGuess={handleGuess}
             />
             <DifficultySelector

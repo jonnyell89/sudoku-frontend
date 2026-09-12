@@ -6,9 +6,15 @@ interface GridProps {
     cells: CellResponse[][];
     selectedCell: SelectedCell | null;
     setSelectedCell: (selectedCell: SelectedCell | null) => void;
+    setSelectedGuess: (selectedGuess: number | null) => void;
 }
 
-function Grid({ cells, selectedCell, setSelectedCell }: GridProps) {
+function Grid({ cells, selectedCell, setSelectedCell, setSelectedGuess }: GridProps) {
+
+    const handleSelect = (row: number, col: number) => {
+        setSelectedCell({ row, col });
+        setSelectedGuess(null);
+    }
 
     return (
         <div className="grid">
@@ -25,7 +31,7 @@ function Grid({ cells, selectedCell, setSelectedCell }: GridProps) {
                             boxRight={boxRight}
                             boxBottom={boxBottom}
                             isSelectedCell={isSelectedCell}
-                            onSelect={() => setSelectedCell({ row, col })}
+                            onSelect={() => handleSelect(row, col)}
                         />
                     );
                 })

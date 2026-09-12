@@ -69,3 +69,17 @@
 .guess.selected-guess {
   background-color: var(--border);  
 }
+
+.difficulty-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 450px;
+  max-width: 100%;
+  aspect-ratio: 18 / 1;
+  margin: 2rem auto;
+}
+
+.difficulty {
+  border: 2px solid var(--text-h);
+}
