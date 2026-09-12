@@ -1,13 +1,13 @@
 import './App.css'
 
-import Game from './components/Game'
+import Sudoku from './components/Sudoku'
 
 function App() {
 
   return (
     <>
       <section id="center">
-        <Game />
+        <Sudoku />
       </section>
     </>
   )

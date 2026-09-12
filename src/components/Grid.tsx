@@ -5,16 +5,10 @@ import type { SelectedCell } from "../interfaces/SelectedCell";
 interface GridProps {
     cells: CellResponse[][];
     selectedCell: SelectedCell | null;
-    setSelectedCell: (selectedCell: SelectedCell | null) => void;
-    setSelectedGuess: (selectedGuess: number | null) => void;
+    onSelect: (row: number, col: number) => void;
 }
 
-function Grid({ cells, selectedCell, setSelectedCell, setSelectedGuess }: GridProps) {
-
-    const handleSelect = (row: number, col: number) => {
-        setSelectedCell({ row, col });
-        setSelectedGuess(null);
-    }
+function Grid({ cells, selectedCell, onSelect }: GridProps) {
 
     return (
         <div className="grid">
@@ -31,7 +25,7 @@ function Grid({ cells, selectedCell, setSelectedCell, setSelectedGuess }: GridPr
                             boxRight={boxRight}
                             boxBottom={boxBottom}
                             isSelectedCell={isSelectedCell}
-                            onSelect={() => handleSelect(row, col)}
+                            onSelect={() => onSelect(row, col)}
                         />
                     );
                 })

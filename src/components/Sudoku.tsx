@@ -11,14 +11,21 @@ import DifficultySelector from "./DifficultySelector";
 import Grid from "./Grid";
 import GuessSelector from "./GuessSelector";
 
-function Game() {
+function Sudoku() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     const [selectedGuess, setSelectedGuess] = useState<number | null>(null);
 
+    const handleSelect = (row: number, col: number) => {
+        setSelectedCell({ row, col });
+        setSelectedGuess(null);
+    }
+
     const handleDifficulty = async (difficulty: string) => {
         try {
             setPuzzle(await createPuzzle(difficulty));
+            setSelectedCell(null);
+            setSelectedGuess(null);
         } catch (error) {
             console.error(`Failed to fetch puzzle: ${error}`);
         }
@@ -27,8 +34,8 @@ function Game() {
     const handleGuess = async (guess: number) => {
         if (puzzle === null || !selectedCell) return;
         const guessRequest: GuessRequest = {
-            row: selectedCell?.row,
-            col: selectedCell?.col,
+            row: selectedCell.row,
+            col: selectedCell.col,
             value: guess,
         };
         try {
@@ -48,12 +55,11 @@ function Game() {
     const cells = puzzle ? puzzle.cells : EMPTY_CELLS;
 
     return (
-        <div className="game">
+        <div className="sudoku">
             <Grid
                 cells={cells}
                 selectedCell={selectedCell}
-                setSelectedCell={setSelectedCell}
-                setSelectedGuess={setSelectedGuess}
+                onSelect={handleSelect}
             />
             <GuessSelector
                 selectedCell={selectedCell}
@@ -67,4 +73,4 @@ function Game() {
     )
 }
 
-export default Game;
+export default Sudoku;
