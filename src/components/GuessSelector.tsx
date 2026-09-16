@@ -5,10 +5,11 @@ interface GuessSelectorProps {
     selectedCell: SelectedCell | null;
     selectedGuess: number | null;
     isGuessCorrect: boolean | null;
+    isSolved: boolean | null;
     onGuess: (guess: number) => void;
 }
 
-function GuessSelector({ selectedCell, selectedGuess, isGuessCorrect, onGuess }: GuessSelectorProps) {
+function GuessSelector({ selectedCell, selectedGuess, isGuessCorrect, isSolved, onGuess }: GuessSelectorProps) {
 
     const guesses: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
 
@@ -22,6 +23,7 @@ function GuessSelector({ selectedCell, selectedGuess, isGuessCorrect, onGuess }:
                     isSelectedGuess ? "selected-guess" : "",
                     isSelectedGuess && isGuessCorrect === true ? "correct-guess" : "",
                     isSelectedGuess && isGuessCorrect === false ? "incorrect-guess" : "",
+                    isSolved === true ? "solved" : "",
                 ].filter(Boolean).join(" ");
                 return (
                     <div

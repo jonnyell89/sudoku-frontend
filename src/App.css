@@ -43,11 +43,18 @@
 }
 
 .cell.correct-guess {
+  color: white;
   background-color: green;
 }
 
 .cell.incorrect-guess {
+  color: white;
   background-color: red;
+}
+
+.cell.solved {
+  color: white;
+  background-color: green;
 }
 
 .guess-selector {
@@ -79,11 +86,18 @@
 }
 
 .guess.correct-guess {
+  color: white;
   background-color: green;
 }
 
 .guess.incorrect-guess {
+  color: white;
   background-color: red;
+}
+
+.guess.solved {
+  color: white;
+  background-color: green;
 }
 
 .difficulty-selector {

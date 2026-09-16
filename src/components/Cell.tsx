@@ -5,10 +5,11 @@ interface CellProps {
     boxBottom: boolean;
     isSelectedCell: boolean;
     isGuessCorrect: boolean | null;
+    isSolved: boolean | null;
     onSelect: () => void;
 }
 
-function Cell({ value, given, boxRight, boxBottom, isSelectedCell, isGuessCorrect, onSelect }: CellProps) {
+function Cell({ value, given, boxRight, boxBottom, isSelectedCell, isGuessCorrect, isSolved, onSelect }: CellProps) {
 
     const handleClick = () => {
         if (!given) {
@@ -24,6 +25,7 @@ function Cell({ value, given, boxRight, boxBottom, isSelectedCell, isGuessCorrec
         isSelectedCell ? "selected-cell" : "",
         isGuessCorrect === true ? "correct-guess" : "",
         isGuessCorrect === false ? "incorrect-guess" : "",
+        isSolved === true ? "solved" : "",
     ].filter(Boolean).join(" ");
     
     return (

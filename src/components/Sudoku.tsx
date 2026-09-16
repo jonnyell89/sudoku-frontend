@@ -16,6 +16,7 @@ function Sudoku() {
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     const [selectedGuess, setSelectedGuess] = useState<number | null>(null);
     const [isGuessCorrect, setIsGuessCorrect] = useState<boolean | null>(null);
+    const [isSolved, setIsSolved] = useState<boolean | null>(null);
 
     const handleSelect = (row: number, col: number) => {
         setSelectedCell({ row, col });
@@ -24,7 +25,7 @@ function Sudoku() {
     }
 
     const handleGuess = async (guess: number) => {
-        if (puzzle === null || !selectedCell) return;
+        if (puzzle === null || !selectedCell || isSolved) return;
         const guessRequest: GuessRequest = {
             row: selectedCell.row,
             col: selectedCell.col,
@@ -34,6 +35,13 @@ function Sudoku() {
             const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
             if (guessResponse.correct) {
                 setPuzzle((prev) => (prev ? updatePuzzle(prev, guessRequest) : prev));
+            }
+            if (guessResponse.correct && guessResponse.solved) {
+                setSelectedCell(null);
+                setSelectedGuess(null);
+                setIsGuessCorrect(null);
+                setIsSolved(true);
+                return;
             }
             setSelectedGuess(guess);
             setIsGuessCorrect(guessResponse.correct);
@@ -48,6 +56,7 @@ function Sudoku() {
             setSelectedCell(null);
             setSelectedGuess(null);
             setIsGuessCorrect(null);
+            setIsSolved(null);
         } catch (error) {
             console.error(`Failed to fetch puzzle: ${error}`);
         }
@@ -61,12 +70,14 @@ function Sudoku() {
                 cells={cells}
                 selectedCell={selectedCell}
                 isGuessCorrect={isGuessCorrect}
+                isSolved={isSolved}
                 onSelect={handleSelect}
             />
             <GuessSelector
                 selectedCell={selectedCell}
                 selectedGuess={selectedGuess}
                 isGuessCorrect={isGuessCorrect}
+                isSolved={isSolved}
                 onGuess={handleGuess}
             />
             <DifficultySelector

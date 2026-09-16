@@ -6,10 +6,11 @@ interface GridProps {
     cells: CellResponse[][];
     selectedCell: SelectedCell | null;
     isGuessCorrect: boolean | null;
+    isSolved: boolean | null;
     onSelect: (row: number, col: number) => void;
 }
 
-function Grid({ cells, selectedCell, isGuessCorrect, onSelect }: GridProps) {
+function Grid({ cells, selectedCell, isGuessCorrect, isSolved, onSelect }: GridProps) {
 
     return (
         <div className="grid">
@@ -18,7 +19,7 @@ function Grid({ cells, selectedCell, isGuessCorrect, onSelect }: GridProps) {
                     const boxRight = col === 2 || col === 5; // refers to box styling
                     const boxBottom = row === 2 || row === 5; // refers to box styling                    
                     const isSelectedCell = selectedCell?.row === row && selectedCell?.col === col;
-                    const isSelectedGuess = isSelectedCell ? isGuessCorrect : null;
+                    const isSelectedCellGuessCorrect = isSelectedCell ? isGuessCorrect : null;
                     return (
                         <Cell
                             key={`${row}-${col}`}
@@ -27,7 +28,8 @@ function Grid({ cells, selectedCell, isGuessCorrect, onSelect }: GridProps) {
                             boxRight={boxRight}
                             boxBottom={boxBottom}
                             isSelectedCell={isSelectedCell}
-                            isGuessCorrect={isSelectedGuess}
+                            isGuessCorrect={isSelectedCellGuessCorrect}
+                            isSolved={isSolved}
                             onSelect={() => onSelect(row, col)}
                         />
                     );
