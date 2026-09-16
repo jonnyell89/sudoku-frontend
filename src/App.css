@@ -42,6 +42,14 @@
   background-color: var(--border);
 }
 
+.cell.correct-guess {
+  background-color: green;
+}
+
+.cell.incorrect-guess {
+  background-color: red;
+}
+
 .guess-selector {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
@@ -68,6 +76,14 @@
 
 .guess.selected-guess {
   background-color: var(--border);  
+}
+
+.guess.correct-guess {
+  background-color: green;
+}
+
+.guess.incorrect-guess {
+  background-color: red;
 }
 
 .difficulty-selector {

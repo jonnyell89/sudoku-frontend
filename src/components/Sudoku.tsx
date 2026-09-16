@@ -15,20 +15,12 @@ function Sudoku() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     const [selectedGuess, setSelectedGuess] = useState<number | null>(null);
+    const [isGuessCorrect, setIsGuessCorrect] = useState<boolean | null>(null);
 
     const handleSelect = (row: number, col: number) => {
         setSelectedCell({ row, col });
         setSelectedGuess(null);
-    }
-
-    const handleDifficulty = async (difficulty: string) => {
-        try {
-            setPuzzle(await createPuzzle(difficulty));
-            setSelectedCell(null);
-            setSelectedGuess(null);
-        } catch (error) {
-            console.error(`Failed to fetch puzzle: ${error}`);
-        }
+        setIsGuessCorrect(null);
     }
 
     const handleGuess = async (guess: number) => {
@@ -42,13 +34,27 @@ function Sudoku() {
             const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
             if (guessResponse.correct) {
                 setPuzzle((prev) => (prev ? updatePuzzle(prev, guessRequest) : prev));
-                setSelectedCell(null);
-                setSelectedGuess(null);
-            } else {
+                setSelectedCell({ row: guessRequest.row, col: guessRequest.col });
                 setSelectedGuess(guess);
+                setIsGuessCorrect(true);
+            } else {
+                setSelectedCell({ row: guessRequest.row, col: guessRequest.col });
+                setSelectedGuess(guess);
+                setIsGuessCorrect(false);
             }
         } catch (error) {
             console.error(`Failed to submit guess: ${error}`);
+        }
+    }
+
+    const handleDifficulty = async (difficulty: string) => {
+        try {
+            setPuzzle(await createPuzzle(difficulty));
+            setSelectedCell(null);
+            setSelectedGuess(null);
+            setIsGuessCorrect(null);
+        } catch (error) {
+            console.error(`Failed to fetch puzzle: ${error}`);
         }
     }
 
@@ -59,11 +65,13 @@ function Sudoku() {
             <Grid
                 cells={cells}
                 selectedCell={selectedCell}
+                isGuessCorrect={isGuessCorrect}
                 onSelect={handleSelect}
             />
             <GuessSelector
                 selectedCell={selectedCell}
                 selectedGuess={selectedGuess}
+                isGuessCorrect={isGuessCorrect}
                 onGuess={handleGuess}
             />
             <DifficultySelector

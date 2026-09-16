@@ -4,10 +4,11 @@ import type { SelectedCell } from "../interfaces/SelectedCell";
 interface GuessSelectorProps {
     selectedCell: SelectedCell | null;
     selectedGuess: number | null;
+    isGuessCorrect: boolean | null;
     onGuess: (guess: number) => void;
 }
 
-function GuessSelector({ selectedCell, selectedGuess, onGuess }: GuessSelectorProps) {
+function GuessSelector({ selectedCell, selectedGuess, isGuessCorrect, onGuess }: GuessSelectorProps) {
 
     const guesses: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
 
@@ -19,6 +20,8 @@ function GuessSelector({ selectedCell, selectedGuess, onGuess }: GuessSelectorPr
                     "guess",
                     selectedCell ? "active" : "",
                     isSelectedGuess ? "selected-guess" : "",
+                    isSelectedGuess && isGuessCorrect === true ? "correct-guess" : "",
+                    isSelectedGuess && isGuessCorrect === false ? "incorrect-guess" : "",
                 ].filter(Boolean).join(" ");
                 return (
                     <div
