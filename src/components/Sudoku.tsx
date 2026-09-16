@@ -34,14 +34,9 @@ function Sudoku() {
             const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
             if (guessResponse.correct) {
                 setPuzzle((prev) => (prev ? updatePuzzle(prev, guessRequest) : prev));
-                setSelectedCell({ row: guessRequest.row, col: guessRequest.col });
-                setSelectedGuess(guess);
-                setIsGuessCorrect(true);
-            } else {
-                setSelectedCell({ row: guessRequest.row, col: guessRequest.col });
-                setSelectedGuess(guess);
-                setIsGuessCorrect(false);
             }
+            setSelectedGuess(guess);
+            setIsGuessCorrect(guessResponse.correct);
         } catch (error) {
             console.error(`Failed to submit guess: ${error}`);
         }
