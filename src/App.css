@@ -38,16 +38,16 @@
   border-bottom: 2px solid var(--text-h);
 }
 
-.cell.selected-cell {
+.cell.selected {
   background-color: var(--border);
 }
 
-.cell.correct-guess {
+.cell.correct {
   color: white;
   background-color: green;
 }
 
-.cell.incorrect-guess {
+.cell.incorrect {
   color: white;
   background-color: red;
 }
@@ -81,16 +81,16 @@
   cursor: pointer;
 }
 
-.guess.selected-guess {
+.guess.selected {
   background-color: var(--border);  
 }
 
-.guess.correct-guess {
+.guess.correct {
   color: white;
   background-color: green;
 }
 
-.guess.incorrect-guess {
+.guess.incorrect {
   color: white;
   background-color: red;
 }
