@@ -15,7 +15,7 @@ function Grid({ cellViews, onSelect }: GridProps) {
                     return (
                         <Cell
                             key={`${row}-${col}`}
-                            view={cellView}
+                            cellView={cellView}
                             onSelect={() => onSelect(row, col)}
                         />
                     );

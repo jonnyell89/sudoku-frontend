@@ -1,37 +1,29 @@
-import { MAX_VALUE } from "../constants/sudoku";
-import type { SelectedCell } from "../interfaces/SelectedCell";
+import type { GuessView } from "../interfaces/GuessView";
 
 interface GuessSelectorProps {
-    selectedCell: SelectedCell | null;
-    selectedGuess: number | null;
-    isGuessCorrect: boolean | null;
-    isSolved: boolean | null;
+    guessViews: GuessView[];
     onGuess: (guess: number) => void;
 }
 
-function GuessSelector({ selectedCell, selectedGuess, isGuessCorrect, isSolved, onGuess }: GuessSelectorProps) {
-
-    const guesses: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
+function GuessSelector({ guessViews, onGuess }: GuessSelectorProps) {
 
     return(
         <div className="guess-selector">
-            {guesses.map((guess) => {
-                const isSelectedGuess = guess === selectedGuess;
+            {guessViews.map((guessView) => {
                 const className = [
                     "guess",
-                    selectedCell ? "active" : "",
-                    isSelectedGuess ? "selected-guess" : "",
-                    isSelectedGuess && isGuessCorrect === true ? "correct-guess" : "",
-                    isSelectedGuess && isGuessCorrect === false ? "incorrect-guess" : "",
-                    isSolved === true ? "solved" : "",
+                    guessView.active ? "active" : "",
+                    guessView.selected ? "selected" : "",
+                    guessView.guess,
+                    guessView.solved ? "solved" : "",
                 ].filter(Boolean).join(" ");
                 return (
                     <div
-                        key={guess}
+                        key={guessView.value}
                         className={className}
-                        onClick={() => onGuess(guess)}
+                        onClick={() => onGuess(guessView.value)}
                     >
-                        {guess}
+                        {guessView.value}
                     </div>
                 )
             })}

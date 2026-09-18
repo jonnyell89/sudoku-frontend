@@ -42,6 +42,10 @@
   background-color: var(--border);
 }
 
+.cell.none {
+  
+}
+
 .cell.correct {
   color: white;
   background-color: green;
@@ -83,6 +87,10 @@
 
 .guess.selected {
   background-color: var(--border);  
+}
+
+.guess.none {
+  
 }
 
 .guess.correct {

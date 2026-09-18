@@ -1,26 +1,26 @@
 import type { CellView } from "../interfaces/CellView";
 
 interface CellProps {
-    view: CellView;
+    cellView: CellView;
     onSelect: () => void;
 }
 
-function Cell({ view, onSelect }: CellProps) {
+function Cell({ cellView, onSelect }: CellProps) {
 
     const handleClick = () => {
-        if (!view.given) {
+        if (!cellView.given) {
             onSelect();
         }
     }
       
     const className = [
         "cell",
-        view.given ? "given" : "",
-        view.selected ? "selected" : "",
-        view.guess,
-        view.solved ? "solved" : "",
-        view.boxRight ? "box-right" : "", // refers to box styling
-        view.boxBottom ? "box-bottom" : "", // refers to box styling
+        cellView.given ? "given" : "",
+        cellView.selected ? "selected" : "",
+        cellView.guess,
+        cellView.solved ? "solved" : "",
+        cellView.boxRight ? "box-right" : "", // refers to box styling
+        cellView.boxBottom ? "box-bottom" : "", // refers to box styling
     ].filter(Boolean).join(" ");
     
     return (
@@ -28,7 +28,7 @@ function Cell({ view, onSelect }: CellProps) {
             className={className}
             onClick={handleClick}
         >
-            {view.value === 0 ? "" : view.value}
+            {cellView.value === 0 ? "" : cellView.value}
         </div>
     )
 }

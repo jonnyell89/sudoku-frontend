@@ -6,9 +6,11 @@ import type { CellResponse } from "../interfaces/CellResponse";
 import type { CellView } from "../interfaces/CellView";
 import type { GuessRequest } from "../interfaces/GuessRequest";
 import type { GuessResponse } from "../interfaces/GuessResponse";
+import type { GuessView } from "../interfaces/GuessView";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 import buildCellViews from "../utils/buildCellViews";
+import buildGuessViews from "../utils/buildGuessViews";
 import updatePuzzle from "../utils/updatePuzzle";
 import DifficultySelector from "./DifficultySelector";
 import Grid from "./Grid";
@@ -22,7 +24,11 @@ function Sudoku() {
     const [isSolved, setIsSolved] = useState<boolean>(false);
 
     const handleSelect = (row: number, col: number) => {
-        if (isSolved) return;
+        if (puzzle === null || isSolved) return;
+        if (selectedCell?.row === row && selectedCell?.col === col) {
+            setSelectedCell(null);
+            return;
+        }
         setSelectedCell({ row, col });
         setSelectedGuess(0);
         setGuessResult(false);
@@ -34,7 +40,7 @@ function Sudoku() {
         const guessRequest: GuessRequest = {
             row: selectedCell.row,
             col: selectedCell.col,
-            value: selectedGuess,
+            value: guess,
         };
         try {
             const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
@@ -64,7 +70,9 @@ function Sudoku() {
 
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
-    const cellViews: CellView[][] = buildCellViews(cells, selectedCell, guessResult, isSolved);
+    const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedGuess, guessResult, isSolved);
+
+    const guessViews: GuessView[] = buildGuessViews(selectedCell, selectedGuess, guessResult, isSolved);
 
     return (
         <div className="sudoku">
@@ -73,10 +81,7 @@ function Sudoku() {
                 onSelect={handleSelect}
             />
             <GuessSelector
-                selectedCell={selectedCell}
-                selectedGuess={selectedGuess}
-                guessResult={guessResult}
-                isSolved={isSolved}
+                guessViews={guessViews}
                 onGuess={handleGuess}
             />
             <DifficultySelector
