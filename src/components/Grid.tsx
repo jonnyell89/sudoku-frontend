@@ -1,5 +1,6 @@
 import Cell from "../components/Cell";
 import type { CellView } from "../interfaces/CellView";
+import buildBoxView from "../utils/buildBoxView";
 
 interface GridProps {
     cellViews: CellView[][];
@@ -24,6 +25,7 @@ function Grid({ cellViews, isEmpty, isSolved, onSelect }: GridProps) {
                         <Cell
                             key={`${row}-${col}`}
                             cellView={cellView}
+                            boxView={buildBoxView(row, col)}
                             onSelect={() => onSelect(row, col)}
                         />
                     );

@@ -7,7 +7,6 @@ function buildGuessViews(
     selectedCell: SelectedCell | null,
     selectedGuess: number,
     guessResult: boolean,
-    isSolved: boolean,
 ): GuessView[] {
 
     const guesses: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
@@ -19,8 +18,7 @@ function buildGuessViews(
             value: guess,
             active: isSelectedCell && !guessResult,
             selected: isSelectedGuess,
-            guess: resolveGuessStatus(isSelectedGuess, selectedGuess, guessResult),
-            solved: isSolved,
+            guessStatus: resolveGuessStatus(isSelectedGuess, selectedGuess, guessResult),
         }
     })
 }

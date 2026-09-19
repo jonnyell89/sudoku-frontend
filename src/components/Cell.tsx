@@ -1,11 +1,13 @@
+import type { BoxView } from "../interfaces/BoxView";
 import type { CellView } from "../interfaces/CellView";
 
 interface CellProps {
     cellView: CellView;
+    boxView: BoxView;
     onSelect: () => void;
 }
 
-function Cell({ cellView, onSelect }: CellProps) {
+function Cell({ cellView, boxView, onSelect }: CellProps) {
 
     const handleClick = () => {
         if (!cellView.given) {
@@ -18,8 +20,8 @@ function Cell({ cellView, onSelect }: CellProps) {
         cellView.given ? "given" : "",
         cellView.selected ? "selected" : "",
         cellView.guessStatus != "none" ? cellView.guessStatus : "",
-        cellView.boxRight ? "box-right" : "", // refers to box styling
-        cellView.boxBottom ? "box-bottom" : "", // refers to box styling
+        boxView.boxRight ? "box-right" : "",
+        boxView.boxBottom ? "box-bottom" : "",
     ].filter(Boolean).join(" ");
     
     return (

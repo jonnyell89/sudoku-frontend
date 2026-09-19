@@ -12,15 +12,11 @@ function buildCellViews(
     return cells.map((rows, row) => (
         rows.map((cell, col) => {
             const isSelectedCell = selectedCell?.row === row && selectedCell?.col === col;
-            const boxRight = col === 2 || col === 5; // refers to box styling
-            const boxBottom = row === 2 || row === 5; // refers to box styling
             return {
                 value: cell.value,
                 given: cell.given,
                 selected: isSelectedCell,
                 guessStatus: resolveGuessStatus(isSelectedCell, selectedGuess, guessResult),
-                boxRight: boxRight,
-                boxBottom: boxBottom,
             }
         })
     ))

@@ -14,8 +14,7 @@ function GuessSelector({ guessViews, onGuess }: GuessSelectorProps) {
                     "guess",
                     guessView.active ? "active" : "",
                     guessView.selected ? "selected" : "",
-                    guessView.guess,
-                    guessView.solved ? "solved" : "",
+                    guessView.guessStatus != "none" ? guessView.guessStatus : "",
                 ].filter(Boolean).join(" ");
                 return (
                     <div

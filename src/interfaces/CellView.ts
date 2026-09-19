@@ -3,6 +3,4 @@ export interface CellView {
     given: boolean;
     selected: boolean;
     guessStatus: "none" | "correct" | "incorrect";
-    boxRight: boolean;
-    boxBottom: boolean;
 }

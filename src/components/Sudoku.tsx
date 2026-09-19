@@ -74,7 +74,7 @@ function Sudoku() {
 
     const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedGuess, guessResult);
 
-    const guessViews: GuessView[] = buildGuessViews(selectedCell, selectedGuess, guessResult, isSolved);
+    const guessViews: GuessView[] = buildGuessViews(selectedCell, selectedGuess, guessResult);
 
     return (
         <div className="sudoku">
