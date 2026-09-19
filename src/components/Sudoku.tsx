@@ -27,6 +27,8 @@ function Sudoku() {
         if (puzzle === null || isSolved) return;
         if (selectedCell?.row === row && selectedCell?.col === col) {
             setSelectedCell(null);
+            setSelectedGuess(0);
+            setGuessResult(false);
             return;
         }
         setSelectedCell({ row, col });
@@ -35,7 +37,7 @@ function Sudoku() {
     }
 
     const handleGuess = async (guess: number) => {
-        if (puzzle === null || !selectedCell || isSolved) return;
+        if (puzzle === null || !selectedCell || guessResult || isSolved) return;
         setSelectedGuess(guess);
         const guessRequest: GuessRequest = {
             row: selectedCell.row,
@@ -70,7 +72,7 @@ function Sudoku() {
 
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
-    const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedGuess, guessResult, isSolved);
+    const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedGuess, guessResult);
 
     const guessViews: GuessView[] = buildGuessViews(selectedCell, selectedGuess, guessResult, isSolved);
 
@@ -78,6 +80,8 @@ function Sudoku() {
         <div className="sudoku">
             <Grid
                 cellViews={cellViews}
+                isEmpty={puzzle === null}
+                isSolved={isSolved}
                 onSelect={handleSelect}
             />
             <GuessSelector

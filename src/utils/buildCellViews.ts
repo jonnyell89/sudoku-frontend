@@ -8,7 +8,6 @@ function buildCellViews(
     selectedCell: SelectedCell | null,
     selectedGuess: number,
     guessResult: boolean,
-    isSolved: boolean,
 ): CellView[][] {
     return cells.map((rows, row) => (
         rows.map((cell, col) => {
@@ -19,8 +18,7 @@ function buildCellViews(
                 value: cell.value,
                 given: cell.given,
                 selected: isSelectedCell,
-                guess: resolveGuessStatus(isSelectedCell, selectedGuess, guessResult),
-                solved: isSolved,
+                guessStatus: resolveGuessStatus(isSelectedCell, selectedGuess, guessResult),
                 boxRight: boxRight,
                 boxBottom: boxBottom,
             }

@@ -17,7 +17,7 @@ function buildGuessViews(
         const isSelectedGuess = guess === selectedGuess;
         return {
             value: guess,
-            active: isSelectedCell,
+            active: isSelectedCell && !guessResult,
             selected: isSelectedGuess,
             guess: resolveGuessStatus(isSelectedGuess, selectedGuess, guessResult),
             solved: isSolved,

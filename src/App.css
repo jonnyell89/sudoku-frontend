@@ -16,6 +16,14 @@
   border: 2px solid var(--text-h); /* outer edge of grid */
 }
 
+.grid.empty {
+  cursor: default;
+}
+
+.grid.solved {
+
+}
+
 .cell {
   box-sizing: border-box;
   display: flex;
@@ -26,7 +34,7 @@
   user-select: none;
 }
 
-.cell:not(.given) {
+.grid:not(.empty) .cell:not(.given) {
   cursor: pointer;
 }
 
@@ -42,9 +50,9 @@
   background-color: var(--border);
 }
 
-.cell.none {
+/* .cell.none {
   
-}
+} */
 
 .cell.correct {
   color: white;
@@ -54,11 +62,6 @@
 .cell.incorrect {
   color: white;
   background-color: red;
-}
-
-.cell.solved {
-  color: white;
-  background-color: green;
 }
 
 .guess-selector {
@@ -89,9 +92,9 @@
   background-color: var(--border);  
 }
 
-.guess.none {
+/* .guess.none {
   
-}
+} */
 
 .guess.correct {
   color: white;
@@ -101,11 +104,6 @@
 .guess.incorrect {
   color: white;
   background-color: red;
-}
-
-.guess.solved {
-  color: white;
-  background-color: green;
 }
 
 .difficulty-selector {
@@ -120,4 +118,5 @@
 
 .difficulty {
   border: 2px solid var(--text-h);
+  cursor: pointer;
 }
