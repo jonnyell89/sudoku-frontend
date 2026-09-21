@@ -19,7 +19,8 @@ function Cell({ cellView, boxView, onSelect }: CellProps) {
         "cell",
         cellView.given ? "given" : "",
         cellView.selected ? "selected" : "",
-        cellView.guessStatus != "none" ? cellView.guessStatus : "",
+        cellView.highlighted ? "highlighted" : "",
+        cellView.guessStatus !== "none" ? cellView.guessStatus : "",
         boxView.boxRight ? "box-right" : "",
         boxView.boxBottom ? "box-bottom" : "",
     ].filter(Boolean).join(" ");

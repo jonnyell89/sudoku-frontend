@@ -46,13 +46,16 @@ function Sudoku() {
         };
         try {
             const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
-            setGuessResult(guessResponse.correct);
             if (guessResponse.correct) {
                 setPuzzle((prev) => (prev ? updatePuzzle(prev, guessRequest) : prev));
             }
             if (guessResponse.correct && guessResponse.solved) {
+                setSelectedCell(null);
+                setSelectedGuess(0);
+                setGuessResult(false);
                 setIsSolved(true);
             }
+            setGuessResult(guessResponse.correct);
         } catch (error) {
             console.error(`Failed to submit guess: ${error}`);
         }

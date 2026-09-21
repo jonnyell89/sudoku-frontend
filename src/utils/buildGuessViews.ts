@@ -12,11 +12,11 @@ function buildGuessViews(
     const guesses: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
 
     return guesses.map((guess) => {
-        const isSelectedCell = selectedCell != null;
+        const isCellSelected = selectedCell !== null;
         const isSelectedGuess = guess === selectedGuess;
         return {
             value: guess,
-            active: isSelectedCell && !guessResult,
+            active: isCellSelected && !guessResult,
             selected: isSelectedGuess,
             guessStatus: resolveGuessStatus(isSelectedGuess, selectedGuess, guessResult),
         }
