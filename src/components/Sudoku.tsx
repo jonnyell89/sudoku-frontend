@@ -15,12 +15,15 @@ import updatePuzzle from "../utils/updatePuzzle";
 import DifficultySelector from "./DifficultySelector";
 import Grid from "./Grid";
 import GuessSelector from "./GuessSelector";
+import Panel from "./Panel";
 
 function Sudoku() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     const [selectedGuess, setSelectedGuess] = useState<number>(0);
     const [guessResult, setGuessResult] = useState<boolean>(false);
+    // const [candidates, setCandidates] = useState<Map<string, number[]>>(new Map());
+    const [candidatesMode, setCandidatesMode] = useState<boolean>(false);
     const [isSolved, setIsSolved] = useState<boolean>(false);
 
     const handleSelect = (row: number, col: number) => {
@@ -73,6 +76,8 @@ function Sudoku() {
         }
     }
 
+    const handleToggle = () => setCandidatesMode((prev) => !prev);
+
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
     const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedGuess, guessResult);
@@ -93,6 +98,10 @@ function Sudoku() {
             />
             <DifficultySelector
                 onDifficulty={handleDifficulty}
+            />
+            <Panel
+                candidatesMode={candidatesMode}
+                onToggle={handleToggle}
             />
         </div>
     )

@@ -118,3 +118,26 @@
   border: 2px solid var(--text-h);
   cursor: pointer;
 }
+
+.panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 450px;
+  max-width: 100%;
+  aspect-ratio: 18 / 1;
+  margin: 2rem auto;
+}
+
+.candidates {
+  border: 2px solid var(--text-h);
+  cursor: pointer;
+}
+
+.candidates.on {
+  background-color: green;
+}
+
+.candidates.off {
+  background-color: red;
+}

@@ -1,3 +1,4 @@
+import { DIFFICULTIES } from "../constants/sudoku";
 import capitalise from "../utils/capitalise";
 
 interface DifficultySelectorProps {
@@ -6,11 +7,9 @@ interface DifficultySelectorProps {
 
 function DifficultySelector({ onDifficulty }: DifficultySelectorProps) {
 
-    const difficulties: string[] = ["easy", "medium", "hard"];
-
     return (
         <div className="difficulty-selector">
-            {difficulties.map((difficulty) => {
+            {DIFFICULTIES.map((difficulty) => {
                 const className = [
                     "difficulty",
                     difficulty,
