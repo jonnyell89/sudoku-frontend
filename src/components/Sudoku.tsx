@@ -50,7 +50,7 @@ function Sudoku() {
         try {
             const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
             if (guessResponse.correct) {
-                setPuzzle((prev) => (prev ? updatePuzzle(prev, guessRequest) : prev));
+                setPuzzle((prev) => (prev && prev.id === puzzle.id ? updatePuzzle(prev, guessRequest) : prev));
             }
             if (guessResponse.correct && guessResponse.solved) {
                 setSelectedCell(null);
