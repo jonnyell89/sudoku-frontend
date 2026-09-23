@@ -22,7 +22,7 @@ function Sudoku() {
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     const [selectedGuess, setSelectedGuess] = useState<number>(0);
     const [guessResult, setGuessResult] = useState<boolean>(false);
-    // const [candidates, setCandidates] = useState<Map<string, number[]>>(new Map());
+    const [candidates, setCandidates] = useState<Map<string, number[]>>(new Map());
     const [candidatesMode, setCandidatesMode] = useState<boolean>(false);
     const [isSolved, setIsSolved] = useState<boolean>(false);
 
