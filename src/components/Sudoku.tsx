@@ -94,6 +94,8 @@ function Sudoku() {
 
     const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedGuess, guessResult);
 
+    // const numberViews: NumberView[] = 
+
     const guessViews: GuessView[] = buildGuessViews(selectedCell, selectedGuess, guessResult);
 
     return (
@@ -105,6 +107,7 @@ function Sudoku() {
                 onSelect={handleSelect}
             />
             <NumberSelector
+                // numberViews={numberViews}
                 guessViews={guessViews}
                 onGuess={handleGuess}
             />
