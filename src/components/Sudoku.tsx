@@ -15,7 +15,7 @@ import toggleCandidates from "../utils/toggleCandidates";
 import updatePuzzle from "../utils/updatePuzzle";
 import DifficultySelector from "./DifficultySelector";
 import Grid from "./Grid";
-import GuessSelector from "./GuessSelector";
+import NumberSelector from "./NumberSelector";
 import Panel from "./Panel";
 
 function Sudoku() {
@@ -104,7 +104,7 @@ function Sudoku() {
                 isSolved={isSolved}
                 onSelect={handleSelect}
             />
-            <GuessSelector
+            <NumberSelector
                 guessViews={guessViews}
                 onGuess={handleGuess}
             />

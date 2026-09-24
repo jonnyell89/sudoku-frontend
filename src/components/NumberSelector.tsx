@@ -1,14 +1,14 @@
 import type { GuessView } from "../interfaces/GuessView";
 
-interface GuessSelectorProps {
+interface NumberSelectorProps {
     guessViews: GuessView[];
     onGuess: (guess: number) => void;
 }
 
-function GuessSelector({ guessViews, onGuess }: GuessSelectorProps) {
+function NumberSelector({ guessViews, onGuess }: NumberSelectorProps) {
 
     return(
-        <div className="guess-selector">
+        <div className="number-selector">
             {guessViews.map((guessView) => {
                 const className = [
                     "guess",
@@ -30,4 +30,4 @@ function GuessSelector({ guessViews, onGuess }: GuessSelectorProps) {
     )
 }
 
-export default GuessSelector;
+export default NumberSelector;

@@ -20,6 +20,7 @@ function buildCellViews(
                 selected: isSelectedCell,
                 highlighted: isHighlighted(row, col, selectedCell),
                 guessStatus: resolveGuessStatus(isSelectedCell, selectedGuess, guessResult),
+                // candidates: 
             }
         })
     ))
