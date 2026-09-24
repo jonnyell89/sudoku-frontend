@@ -79,12 +79,16 @@ function Sudoku() {
 
     const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
 
-    // const handleSetCandidates = (row: number, col: number, candidate: number) => setCandidates((prev) => {
-    //     const key = `${row}-${col}`;
-    //     const next = new Map(prev);
-    //     next.set(key, toggleCandidates(prev.get(key) ?? [], candidate));
-    //     return next;
-    // })
+    const handleCandidate = (candidate: number) => {
+        if (puzzle === null || !selectedCell || !candidatesMode) return;
+        const key: string = `${selectedCell.row}-${selectedCell.col}`;
+        setCandidates((prev) => {
+            const next = new Map(prev);
+            next.set(key, toggleCandidates(prev.get(key) ?? [], candidate));
+            console.log(next);
+            return next;
+        })
+    }
 
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
