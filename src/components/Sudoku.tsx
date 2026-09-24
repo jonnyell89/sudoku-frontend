@@ -11,6 +11,7 @@ import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 import buildCellViews from "../utils/buildCellViews";
 import buildGuessViews from "../utils/buildGuessViews";
+import toggleCandidates from "../utils/toggleCandidates";
 import updatePuzzle from "../utils/updatePuzzle";
 import DifficultySelector from "./DifficultySelector";
 import Grid from "./Grid";
@@ -76,7 +77,14 @@ function Sudoku() {
         }
     }
 
-    const handleToggle = () => setCandidatesMode((prev) => !prev);
+    const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
+
+    // const handleSetCandidates = (row: number, col: number, candidate: number) => setCandidates((prev) => {
+    //     const key = `${row}-${col}`;
+    //     const next = new Map(prev);
+    //     next.set(key, toggleCandidates(prev.get(key) ?? [], candidate));
+    //     return next;
+    // })
 
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
@@ -101,7 +109,7 @@ function Sudoku() {
             />
             <Panel
                 candidatesMode={candidatesMode}
-                onToggle={handleToggle}
+                onToggle={handleCandidatesMode}
             />
         </div>
     )
