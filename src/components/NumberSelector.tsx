@@ -1,29 +1,27 @@
-import type { GuessView } from "../interfaces/GuessView";
 import type { NumberView } from "../interfaces/NumberView";
 
 interface NumberSelectorProps {
     numberViews: NumberView[];
-    guessViews: GuessView[];
-    // candidateViews: CandidateView[];
-    onGuess: (guess: number) => void;
+    onNumber: (number: number) => void;
 }
 
-function NumberSelector({ numberViews, guessViews, onGuess }: NumberSelectorProps) {
+function NumberSelector({ numberViews, onNumber }: NumberSelectorProps) {
 
     return(
         <div className="number-selector">
             {numberViews.map((numberView) => {
                 const className = [
-                    "guess",
                     numberView.active ? "active" : "",
                     numberView.selected ? "selected" : "",
-                    guessView.guessStatus !== "none" ? guessView.guessStatus : "",
+                    numberView.numberStatus,
+                    numberView.guessStatus,
+                    numberView.candidate ? "candidate" : "",
                 ].filter(Boolean).join(" ");
                 return (
                     <div
                         key={numberView.value}
                         className={className}
-                        onClick={() => onGuess(numberView.value)}
+                        onClick={() => onNumber(numberView.value)}
                     >
                         {numberView.value}
                     </div>

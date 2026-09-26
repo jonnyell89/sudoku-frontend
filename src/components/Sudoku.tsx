@@ -6,11 +6,11 @@ import type { CellResponse } from "../interfaces/CellResponse";
 import type { CellView } from "../interfaces/CellView";
 import type { GuessRequest } from "../interfaces/GuessRequest";
 import type { GuessResponse } from "../interfaces/GuessResponse";
-import type { GuessView } from "../interfaces/GuessView";
+import type { NumberView } from "../interfaces/NumberView";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 import buildCellViews from "../utils/buildCellViews";
-import buildGuessViews from "../utils/buildGuessViews";
+import buildNumberViews from "../utils/buildNumberView";
 import toggleCandidates from "../utils/toggleCandidates";
 import updatePuzzle from "../utils/updatePuzzle";
 import DifficultySelector from "./DifficultySelector";
@@ -40,6 +40,19 @@ function Sudoku() {
         setGuessResult(false);
     }
 
+    const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
+
+    const handleCandidate = (candidate: number) => {
+        if (puzzle === null || !selectedCell || !candidatesMode) return;
+        const key: string = `${selectedCell.row}-${selectedCell.col}`;
+        setCandidates((prev) => {
+            const next = new Map(prev);
+            next.set(key, toggleCandidates(prev.get(key) ?? [], candidate));
+            console.log(next);
+            return next;
+        })
+    }
+
     const handleGuess = async (guess: number) => {
         if (puzzle === null || !selectedCell || guessResult || isSolved) return;
         setSelectedGuess(guess);
@@ -65,6 +78,8 @@ function Sudoku() {
         }
     }
 
+    const handleNumber = candidatesMode ? handleCandidate : handleGuess;
+
     const handleDifficulty = async (difficulty: string) => {
         try {
             setPuzzle(await createPuzzle(difficulty));
@@ -77,26 +92,11 @@ function Sudoku() {
         }
     }
 
-    const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
-
-    const handleCandidate = (candidate: number) => {
-        if (puzzle === null || !selectedCell || !candidatesMode) return;
-        const key: string = `${selectedCell.row}-${selectedCell.col}`;
-        setCandidates((prev) => {
-            const next = new Map(prev);
-            next.set(key, toggleCandidates(prev.get(key) ?? [], candidate));
-            console.log(next);
-            return next;
-        })
-    }
-
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
     const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedGuess, guessResult);
 
-    // const numberViews: NumberView[] = 
-
-    const guessViews: GuessView[] = buildGuessViews(selectedCell, selectedGuess, guessResult);
+    const numberViews: NumberView[] = buildNumberViews(selectedCell, selectedGuess, guessResult, candidates, candidatesMode);
 
     return (
         <div className="sudoku">
@@ -107,9 +107,8 @@ function Sudoku() {
                 onSelect={handleSelect}
             />
             <NumberSelector
-                // numberViews={numberViews}
-                guessViews={guessViews}
-                onGuess={handleGuess}
+                numberViews={numberViews}
+                onNumber={handleNumber}
             />
             <DifficultySelector
                 onDifficulty={handleDifficulty}

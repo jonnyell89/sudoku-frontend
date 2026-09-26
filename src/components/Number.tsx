@@ -1,14 +1,5 @@
-import type { GuessView } from "../interfaces/GuessView";
-import type { NumberView } from "../interfaces/NumberView";
+interface NumberProps {}
 
-interface NumberProps {
-    numberView: NumberView;
-    guessView: GuessView;
-    // candidateView: CandidateView;
-    onGuess: () => void;
-    // onCandidate: () => void;
-}
-
-function Number({ numberView, guessView, onGuess }: NumberProps) {}
+function Number({}: NumberProps) {}
 
 export default Number;
