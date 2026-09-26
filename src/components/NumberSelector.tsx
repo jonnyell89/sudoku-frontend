@@ -1,4 +1,5 @@
 import type { NumberView } from "../interfaces/NumberView";
+import NumberButton from "./NumberButton";
 
 interface NumberSelectorProps {
     numberViews: NumberView[];
@@ -10,21 +11,12 @@ function NumberSelector({ numberViews, onNumber }: NumberSelectorProps) {
     return(
         <div className="number-selector">
             {numberViews.map((numberView) => {
-                const className = [
-                    numberView.active ? "active" : "",
-                    numberView.selected ? "selected" : "",
-                    numberView.numberStatus,
-                    numberView.guessStatus,
-                    numberView.candidate ? "candidate" : "",
-                ].filter(Boolean).join(" ");
                 return (
-                    <div
+                    <NumberButton
                         key={numberView.value}
-                        className={className}
-                        onClick={() => onNumber(numberView.value)}
-                    >
-                        {numberView.value}
-                    </div>
+                        numberView={numberView}
+                        onNumber={() => onNumber(numberView.value)}
+                    />
                 )
             })}
         </div>
