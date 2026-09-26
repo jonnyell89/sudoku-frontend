@@ -10,18 +10,18 @@ import type { NumberView } from "../interfaces/NumberView";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 import buildCellViews from "../utils/buildCellViews";
-import buildNumberViews from "../utils/buildNumberView";
+import buildNumberViews from "../utils/buildNumberViews";
 import toggleCandidates from "../utils/toggleCandidates";
 import updatePuzzle from "../utils/updatePuzzle";
+import ButtonPanel from "./ButtonPanel";
 import DifficultySelector from "./DifficultySelector";
 import Grid from "./Grid";
 import NumberSelector from "./NumberSelector";
-import Panel from "./Panel";
 
 function Sudoku() {
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
-    const [selectedGuess, setSelectedGuess] = useState<number>(0);
+    const [selectedNumber, setSelectedNumber] = useState<number>(0);
     const [guessResult, setGuessResult] = useState<boolean>(false);
     const [candidates, setCandidates] = useState<Map<string, number[]>>(new Map());
     const [candidatesMode, setCandidatesMode] = useState<boolean>(false);
@@ -31,12 +31,12 @@ function Sudoku() {
         if (puzzle === null || isSolved) return;
         if (selectedCell?.row === row && selectedCell?.col === col) {
             setSelectedCell(null);
-            setSelectedGuess(0);
+            setSelectedNumber(0);
             setGuessResult(false);
             return;
         }
         setSelectedCell({ row, col });
-        setSelectedGuess(0);
+        setSelectedNumber(0);
         setGuessResult(false);
     }
 
@@ -55,7 +55,7 @@ function Sudoku() {
 
     const handleGuess = async (guess: number) => {
         if (puzzle === null || !selectedCell || guessResult || isSolved) return;
-        setSelectedGuess(guess);
+        setSelectedNumber(guess);
         const guessRequest: GuessRequest = {
             row: selectedCell.row,
             col: selectedCell.col,
@@ -68,7 +68,7 @@ function Sudoku() {
             }
             if (guessResponse.correct && guessResponse.solved) {
                 setSelectedCell(null);
-                setSelectedGuess(0);
+                setSelectedNumber(0);
                 setGuessResult(false);
                 setIsSolved(true);
             }
@@ -84,7 +84,7 @@ function Sudoku() {
         try {
             setPuzzle(await createPuzzle(difficulty));
             setSelectedCell(null);
-            setSelectedGuess(0);
+            setSelectedNumber(0);
             setGuessResult(false);
             setIsSolved(false);
         } catch (error) {
@@ -94,9 +94,9 @@ function Sudoku() {
 
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
-    const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedGuess, guessResult);
+    const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedNumber, guessResult, candidates);
 
-    const numberViews: NumberView[] = buildNumberViews(selectedCell, selectedGuess, guessResult, candidates, candidatesMode);
+    const numberViews: NumberView[] = buildNumberViews(selectedCell, selectedNumber, guessResult, candidates, candidatesMode);
 
     return (
         <div className="sudoku">
@@ -113,7 +113,7 @@ function Sudoku() {
             <DifficultySelector
                 onDifficulty={handleDifficulty}
             />
-            <Panel
+            <ButtonPanel
                 candidatesMode={candidatesMode}
                 onToggle={handleCandidatesMode}
             />

@@ -1,9 +1,9 @@
-interface PanelProps {
+interface ButtonPanelProps {
     candidatesMode: boolean;
     onToggle: () => void;
 }
 
-function Panel({ candidatesMode, onToggle }: PanelProps) {
+function ButtonPanel({ candidatesMode, onToggle }: ButtonPanelProps) {
 
     const className = [
         "candidates",
@@ -11,7 +11,7 @@ function Panel({ candidatesMode, onToggle }: PanelProps) {
     ].filter(Boolean).join(" ");
 
     return (
-        <div className="panel">
+        <div className="button-panel">
             <button
                 className={className}
                 onClick={onToggle}
@@ -22,4 +22,4 @@ function Panel({ candidatesMode, onToggle }: PanelProps) {
     )
 }
 
-export default Panel;
+export default ButtonPanel;
