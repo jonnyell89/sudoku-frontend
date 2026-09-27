@@ -11,7 +11,8 @@ import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 import buildCellViews from "../utils/buildCellViews";
 import buildNumberViews from "../utils/buildNumberViews";
-import toggleCandidates from "../utils/toggleCandidates";
+import cellKey from "../utils/cellKey";
+import toggleCandidate from "../utils/toggleCandidate";
 import updatePuzzle from "../utils/updatePuzzle";
 import ButtonPanel from "./ButtonPanel";
 import DifficultySelector from "./DifficultySelector";
@@ -44,10 +45,10 @@ function Sudoku() {
 
     const handleCandidate = (candidate: number) => {
         if (puzzle === null || !selectedCell || !candidatesMode) return;
-        const key: string = `${selectedCell.row}-${selectedCell.col}`;
+        const key: string = cellKey(selectedCell.row, selectedCell.col);
         setCandidates((prev) => {
             const next = new Map(prev);
-            next.set(key, toggleCandidates(prev.get(key) ?? [], candidate));
+            next.set(key, toggleCandidate(prev.get(key) ?? [], candidate));
             console.log(next);
             return next;
         })
@@ -70,6 +71,8 @@ function Sudoku() {
                 setSelectedCell(null);
                 setSelectedNumber(0);
                 setGuessResult(false);
+                setCandidates(new Map());
+                setCandidatesMode(false);
                 setIsSolved(true);
             }
             setGuessResult(guessResponse.correct);
@@ -86,6 +89,8 @@ function Sudoku() {
             setSelectedCell(null);
             setSelectedNumber(0);
             setGuessResult(false);
+            setCandidates(new Map());
+            setCandidatesMode(false);
             setIsSolved(false);
         } catch (error) {
             console.error(`Failed to fetch puzzle: ${error}`);

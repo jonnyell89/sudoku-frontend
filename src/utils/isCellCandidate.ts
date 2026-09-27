@@ -1,4 +1,5 @@
 import type { SelectedCell } from "../interfaces/SelectedCell";
+import getCellCandidates from "./getCellCandidates";
 
 function isCellCandidate(
     selectedCell: SelectedCell | null,
@@ -6,9 +7,7 @@ function isCellCandidate(
     number: number,
 ): boolean {
     if (selectedCell === null) return false;
-    const key: string = `${selectedCell.row}-${selectedCell.col}`;
-    const cellCandidates: number[] = candidates.get(key) ?? [];
-    return cellCandidates.includes(number);
+    return getCellCandidates(selectedCell.row, selectedCell.col, candidates).includes(number);
 }
 
 export default isCellCandidate;
