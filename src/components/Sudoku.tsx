@@ -9,17 +9,18 @@ import type { GuessResponse } from "../interfaces/GuessResponse";
 import type { NumberView } from "../interfaces/NumberView";
 import type { PuzzleResponse } from "../interfaces/PuzzleResponse";
 import type { SelectedCell } from "../interfaces/SelectedCell";
-import buildCellViews from "../utils/buildCellViews";
-import buildNumberViews from "../utils/buildNumberViews";
-import cellKey from "../utils/cellKey";
-import toggleCandidate from "../utils/toggleCandidate";
-import updatePuzzle from "../utils/updatePuzzle";
+import { buildCellViews } from "../utils/buildCellViews";
+import { buildNumberViews } from "../utils/buildNumberViews";
+import { cellKey } from "../utils/cellKey";
+import { toggleCandidate } from "../utils/toggleCandidate";
+import { updatePuzzle } from "../utils/updatePuzzle";
 import ButtonPanel from "./ButtonPanel";
 import DifficultySelector from "./DifficultySelector";
 import Grid from "./Grid";
 import NumberSelector from "./NumberSelector";
 
 function Sudoku() {
+
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     const [selectedNumber, setSelectedNumber] = useState<number>(0);
@@ -28,7 +29,10 @@ function Sudoku() {
     const [candidatesMode, setCandidatesMode] = useState<boolean>(false);
     const [isSolved, setIsSolved] = useState<boolean>(false);
 
-    const handleSelect = (row: number, col: number) => {
+    const handleSelect = (
+        row: number,
+        col: number,
+    ) => {
         if (puzzle === null || isSolved) return;
         if (selectedCell?.row === row && selectedCell?.col === col) {
             setSelectedCell(null);
@@ -39,22 +43,25 @@ function Sudoku() {
         setSelectedCell({ row, col });
         setSelectedNumber(0);
         setGuessResult(false);
-    }
+    };
 
     const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
 
-    const handleCandidate = (candidate: number) => {
+    const handleCandidate = (
+        candidate: number,
+    ) => {
         if (puzzle === null || !selectedCell || !candidatesMode) return;
         const key: string = cellKey(selectedCell.row, selectedCell.col);
         setCandidates((prev) => {
             const next = new Map(prev);
             next.set(key, toggleCandidate(prev.get(key) ?? [], candidate));
-            console.log(next);
             return next;
-        })
-    }
+        });
+    };
 
-    const handleGuess = async (guess: number) => {
+    const handleGuess = async (
+        guess: number,
+    ) => {
         if (puzzle === null || !selectedCell || guessResult || isSolved) return;
         setSelectedNumber(guess);
         const guessRequest: GuessRequest = {
@@ -79,11 +86,13 @@ function Sudoku() {
         } catch (error) {
             console.error(`Failed to submit guess: ${error}`);
         }
-    }
+    };
 
     const handleNumber = candidatesMode ? handleCandidate : handleGuess;
 
-    const handleDifficulty = async (difficulty: string) => {
+    const handleDifficulty = async (
+        difficulty: string,
+    ) => {
         try {
             setPuzzle(await createPuzzle(difficulty));
             setSelectedCell(null);
@@ -95,13 +104,25 @@ function Sudoku() {
         } catch (error) {
             console.error(`Failed to fetch puzzle: ${error}`);
         }
-    }
+    };
 
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
-    const cellViews: CellView[][] = buildCellViews(cells, selectedCell, selectedNumber, guessResult, candidates);
+    const cellViews: CellView[][] = buildCellViews(
+        cells,
+        selectedCell,
+        selectedNumber,
+        guessResult,
+        candidates,
+    );
 
-    const numberViews: NumberView[] = buildNumberViews(selectedCell, selectedNumber, guessResult, candidates, candidatesMode);
+    const numberViews: NumberView[] = buildNumberViews(
+        selectedCell,
+        selectedNumber,
+        guessResult,
+        candidates,
+        candidatesMode,
+    );
 
     return (
         <div className="sudoku">
@@ -123,7 +144,7 @@ function Sudoku() {
                 onToggle={handleCandidatesMode}
             />
         </div>
-    )
+    );
 }
 
 export default Sudoku;

@@ -1,20 +1,18 @@
 import { MAX_VALUE } from "../constants/sudoku";
 import type { NumberView } from "../interfaces/NumberView";
 import type { SelectedCell } from "../interfaces/SelectedCell";
-import isCellCandidate from "./isCellCandidate";
-import resolveGuessStatus from "./resolveGuessStatus";
-import resolveNumberStatus from "./resolveNumberStatus";
+import { isCellCandidate } from "./isCellCandidate";
+import { resolveGuessStatus } from "./resolveGuessStatus";
+import { resolveNumberStatus } from "./resolveNumberStatus";
 
-function buildNumberViews(
+export function buildNumberViews(
     selectedCell: SelectedCell | null,
     selectedNumber: number,
     guessResult: boolean,
     candidates: Map<string, number[]>,
     candidatesMode: boolean,
 ): NumberView[] {
-
     const numbers: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
-
     return numbers.map((number) => {
         const isActive = selectedCell !== null;
         const isSelectedNumber = number === selectedNumber;
@@ -28,8 +26,6 @@ function buildNumberViews(
             numberStatus: numberStatus,
             guessStatus: guessStatus,
             candidate: isCandidate,
-        }
-    })
+        };
+    });
 }
-
-export default buildNumberViews;

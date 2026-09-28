@@ -6,21 +6,24 @@ interface NumberSelectorProps {
     onNumber: (number: number) => void;
 }
 
-function NumberSelector({ numberViews, onNumber }: NumberSelectorProps) {
+function NumberSelector({
+    numberViews,
+    onNumber,
+}: NumberSelectorProps) {
 
-    return(
+    return (
         <div className="number-selector">
             {numberViews.map((numberView) => {
                 return (
                     <NumberButton
                         key={numberView.value}
                         numberView={numberView}
-                        onNumber={() => onNumber(numberView.value)}
+                        onNumber={onNumber}
                     />
-                )
+                );
             })}
         </div>
-    )
+    );
 }
 
 export default NumberSelector;

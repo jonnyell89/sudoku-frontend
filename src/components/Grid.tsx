@@ -1,6 +1,6 @@
 import Cell from "../components/Cell";
 import type { CellView } from "../interfaces/CellView";
-import buildBoxView from "../utils/buildBoxView";
+import { buildBoxView } from "../utils/buildBoxView";
 
 interface GridProps {
     cellViews: CellView[][];
@@ -9,7 +9,12 @@ interface GridProps {
     onSelect: (row: number, col: number) => void;
 }
 
-function Grid({ cellViews, isEmpty, isSolved, onSelect }: GridProps) {
+function Grid({
+    cellViews,
+    isEmpty,
+    isSolved,
+    onSelect,
+}: GridProps) {
 
     const className = [
         "grid",

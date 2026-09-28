@@ -1,9 +1,7 @@
 export type NumberStatus = "candidates" | "guess";
 
-function resolveNumberStatus(
+export function resolveNumberStatus(
     candidatesMode: boolean,
 ): NumberStatus {
     return candidatesMode ? "candidates" : "guess";
 }
-
-export default resolveNumberStatus;

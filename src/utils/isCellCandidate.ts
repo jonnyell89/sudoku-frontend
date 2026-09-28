@@ -1,7 +1,7 @@
 import type { SelectedCell } from "../interfaces/SelectedCell";
-import getCellCandidates from "./getCellCandidates";
+import { getCellCandidates } from "./getCellCandidates";
 
-function isCellCandidate(
+export function isCellCandidate(
     selectedCell: SelectedCell | null,
     candidates: Map<string, number[]>,
     number: number,
@@ -9,5 +9,3 @@ function isCellCandidate(
     if (selectedCell === null) return false;
     return getCellCandidates(selectedCell.row, selectedCell.col, candidates).includes(number);
 }
-
-export default isCellCandidate;

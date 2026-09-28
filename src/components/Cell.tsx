@@ -7,14 +7,18 @@ interface CellProps {
     onSelect: () => void;
 }
 
-function Cell({ cellView, boxView, onSelect }: CellProps) {
+function Cell({
+    cellView,
+    boxView,
+    onSelect,
+}: CellProps) {
 
     const handleClick = () => {
         if (!cellView.given) {
             onSelect();
         }
-    }
-      
+    };
+
     const className = [
         "cell",
         cellView.given ? "given" : "",
@@ -24,7 +28,7 @@ function Cell({ cellView, boxView, onSelect }: CellProps) {
         boxView.boxRight ? "box-right" : "",
         boxView.boxBottom ? "box-bottom" : "",
     ].filter(Boolean).join(" ");
-    
+
     return (
         <div
             className={className}
@@ -32,7 +36,7 @@ function Cell({ cellView, boxView, onSelect }: CellProps) {
         >
             {cellView.value === 0 ? "" : cellView.value}
         </div>
-    )
+    );
 }
 
 export default Cell;

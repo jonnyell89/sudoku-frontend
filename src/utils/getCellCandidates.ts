@@ -1,11 +1,9 @@
-import cellKey from "./cellKey";
+import { cellKey } from "./cellKey";
 
-function getCellCandidates(
-    row: number, 
-    col: number, 
-    candidates: Map<string, number[]>
+export function getCellCandidates(
+    row: number,
+    col: number,
+    candidates: Map<string, number[]>,
 ): number[] {
     return candidates.get(cellKey(row, col)) ?? [];
 }
-
-export default getCellCandidates;

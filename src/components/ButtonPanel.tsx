@@ -3,7 +3,10 @@ interface ButtonPanelProps {
     onToggle: () => void;
 }
 
-function ButtonPanel({ candidatesMode, onToggle }: ButtonPanelProps) {
+function ButtonPanel({
+    candidatesMode,
+    onToggle,
+}: ButtonPanelProps) {
 
     const className = [
         "candidates",
@@ -19,7 +22,7 @@ function ButtonPanel({ candidatesMode, onToggle }: ButtonPanelProps) {
                 Candidates
             </button>
         </div>
-    )
+    );
 }
 
 export default ButtonPanel;

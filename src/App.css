@@ -91,7 +91,7 @@
 }
 
 .guess.selected {
-  background-color: var(--border);  
+  background-color: var(--border);
 }
 
 .guess.correct {

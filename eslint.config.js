@@ -1,4 +1,5 @@
 import js from '@eslint/js'
+import stylistic from '@stylistic/eslint-plugin'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
@@ -17,11 +18,21 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     plugins: {
+      '@stylistic': stylistic,
       'simple-import-sort': simpleImportSort,
     },
     rules: {
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      '@stylistic/semi': ['error', 'always'],
+      '@stylistic/comma-dangle': ['error', {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        functions: 'always-multiline',
+      }],
+      '@stylistic/no-trailing-spaces': 'error',
     },
     languageOptions: {
       globals: globals.browser,

@@ -5,7 +5,10 @@ interface NumberButtonProps {
     onNumber: (value: number) => void;
 }
 
-function NumberButton({ numberView, onNumber }: NumberButtonProps) {
+function NumberButton({
+    numberView,
+    onNumber,
+}: NumberButtonProps) {
 
     const className = [
         numberView.active ? "active" : "",
@@ -22,7 +25,7 @@ function NumberButton({ numberView, onNumber }: NumberButtonProps) {
         >
             {numberView.value}
         </div>
-    )
+    );
 }
 
 export default NumberButton;

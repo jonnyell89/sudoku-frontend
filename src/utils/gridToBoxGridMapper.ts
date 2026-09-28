@@ -1,6 +1,8 @@
 import { BOX_SIZE, GRID_SIZE } from "../constants/sudoku";
 
-function gridToBoxGridMapper(grid: number[][]): number[][] {
+export function gridToBoxGridMapper(
+    grid: number[][],
+): number[][] {
     const boxGrid: number[][] = [...Array(GRID_SIZE)].map(() => Array(GRID_SIZE).fill(0));
     for (let row = 0; row < grid.length; row++) {
         for (let col = 0; col < grid[row].length; col++) {
@@ -11,5 +13,3 @@ function gridToBoxGridMapper(grid: number[][]): number[][] {
     }
     return boxGrid;
 }
-
-export default gridToBoxGridMapper;
