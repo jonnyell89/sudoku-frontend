@@ -11,10 +11,11 @@ function NumberButton({
 }: NumberButtonProps) {
 
     const className = [
+        "number",
         numberView.active ? "active" : "",
         numberView.selected ? "selected" : "",
         numberView.numberStatus,
-        numberView.guessStatus,
+        numberView.guessStatus !== "none" ? numberView.guessStatus : "",
         numberView.candidate ? "candidate" : "",
     ].filter(Boolean).join(" ");
 

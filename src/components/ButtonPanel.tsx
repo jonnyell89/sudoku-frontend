@@ -9,7 +9,7 @@ function ButtonPanel({
 }: ButtonPanelProps) {
 
     const className = [
-        "candidates",
+        "candidates-button",
         candidatesMode ? "on" : "off",
     ].filter(Boolean).join(" ");
 

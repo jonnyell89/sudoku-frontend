@@ -14,7 +14,7 @@ function Cell({
 }: CellProps) {
 
     const handleClick = () => {
-        if (!cellView.given) {
+        if (cellView.selectable) {
             onSelect();
         }
     };
@@ -22,6 +22,7 @@ function Cell({
     const className = [
         "cell",
         cellView.given ? "given" : "",
+        cellView.selectable ? "selectable" : "",
         cellView.selected ? "selected" : "",
         cellView.highlighted ? "highlighted" : "",
         cellView.guessStatus !== "none" ? cellView.guessStatus : "",
