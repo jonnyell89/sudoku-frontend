@@ -23,8 +23,9 @@
 }
 
 .grid.solved {
-  color: white;
-  background-color: var(--blue);
+  color: var(--text-h);
+  --cell: var(--green); /* redefine --cell inside .grid.solved */
+  /* background-color: var(--green); */
 }
 
 .cell {
