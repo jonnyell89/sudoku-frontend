@@ -7,8 +7,8 @@ import { resolveNumberStatus } from "./resolveNumberStatus";
 
 export function buildNumberViews(
     selectedCell: SelectedCell | null,
-    selectedNumber: number,
-    guessResult: boolean,
+    selectedNumber: number | null,
+    guessResult: boolean | null,
     candidates: Map<string, number[]>,
     candidatesMode: boolean,
 ): NumberView[] {

@@ -23,8 +23,8 @@ function Sudoku() {
 
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
-    const [selectedNumber, setSelectedNumber] = useState<number>(0);
-    const [guessResult, setGuessResult] = useState<boolean>(false);
+    const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
+    const [guessResult, setGuessResult] = useState<boolean | null>(null);
     const [candidates, setCandidates] = useState<Map<string, number[]>>(new Map());
     const [candidatesMode, setCandidatesMode] = useState<boolean>(false);
     const [isSolved, setIsSolved] = useState<boolean>(false);
@@ -38,13 +38,13 @@ function Sudoku() {
         if (isEmpty || isSolved) return;
         if (selectedCell?.row === row && selectedCell?.col === col) {
             setSelectedCell(null);
-            setSelectedNumber(0);
-            setGuessResult(false);
+            setSelectedNumber(null);
+            setGuessResult(null);
             return;
         }
         setSelectedCell({ row, col });
-        setSelectedNumber(0);
-        setGuessResult(false);
+        setSelectedNumber(null);
+        setGuessResult(null);
     };
 
     const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
@@ -78,8 +78,8 @@ function Sudoku() {
             }
             if (guessResponse.correct && guessResponse.solved) {
                 setSelectedCell(null);
-                setSelectedNumber(0);
-                setGuessResult(false);
+                setSelectedNumber(null);
+                setGuessResult(null);
                 setCandidates(new Map());
                 setCandidatesMode(false);
                 setIsSolved(true);
@@ -98,8 +98,8 @@ function Sudoku() {
         try {
             setPuzzle(await createPuzzle(difficulty));
             setSelectedCell(null);
-            setSelectedNumber(0);
-            setGuessResult(false);
+            setSelectedNumber(null);
+            setGuessResult(null);
             setCandidates(new Map());
             setCandidatesMode(false);
             setIsSolved(false);
@@ -130,6 +130,9 @@ function Sudoku() {
 
     return (
         <div className="sudoku">
+            <DifficultySelector
+                onDifficulty={handleDifficulty}
+            />
             <Grid
                 cellViews={cellViews}
                 isEmpty={isEmpty}
@@ -139,9 +142,6 @@ function Sudoku() {
             <NumberSelector
                 numberViews={numberViews}
                 onNumber={handleNumber}
-            />
-            <DifficultySelector
-                onDifficulty={handleDifficulty}
             />
             <ButtonPanel
                 candidatesMode={candidatesMode}

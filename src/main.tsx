@@ -1,3 +1,4 @@
+import "./styles/variables.css";
 import "./index.css";
 
 import { StrictMode } from "react";

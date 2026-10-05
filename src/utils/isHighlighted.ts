@@ -7,6 +7,7 @@ export function isHighlighted(
     selectedCell: SelectedCell | null,
 ): boolean {
     if (selectedCell === null) return false;
+    if (row === selectedCell.row && col === selectedCell.col) return false;
     return row === selectedCell.row
         || col === selectedCell.col
         || isBoxEqual(row, col, selectedCell.row, selectedCell.col);

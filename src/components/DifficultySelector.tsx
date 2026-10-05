@@ -13,7 +13,7 @@ function DifficultySelector({
         <div className="difficulty-selector">
             {DIFFICULTIES.map((difficulty) => {
                 const className = [
-                    "difficulty",
+                    "difficulty-button",
                     difficulty,
                 ].filter(Boolean).join(" ");
                 return (

@@ -9,8 +9,8 @@ export function buildCellViews(
     isEmpty: boolean,
     cells: CellResponse[][],
     selectedCell: SelectedCell | null,
-    selectedGuess: number,
-    guessResult: boolean,
+    selectedNumber: number | null,
+    guessResult: boolean | null,
     candidates: Map<string, number[]>,
     isSolved: boolean,
 ): CellView[][] {
@@ -24,7 +24,7 @@ export function buildCellViews(
                 selectable: isSelectable,
                 selected: isSelectedCell,
                 highlighted: isHighlighted(row, col, selectedCell),
-                guessStatus: resolveGuessStatus(isSelectedCell, selectedGuess, guessResult),
+                guessStatus: resolveGuessStatus(isSelectedCell, selectedNumber, guessResult),
                 candidates: getCellCandidates(row, col, candidates),
             };
         })
