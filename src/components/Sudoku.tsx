@@ -32,20 +32,20 @@ function Sudoku() {
 
     const isGridEmpty = puzzle === null;
 
+    const resetSelection = () => {
+        setSelectedCell(null);
+        setSelectedNumber(null);
+        setGuessResult(null);
+    };
+
     const handleSelect = (
         row: number,
         col: number,
     ) => {
         if (isGridEmpty || isPuzzleSolved) return;
-        if (selectedCell?.row === row && selectedCell?.col === col) {
-            setSelectedCell(null);
-            setSelectedNumber(null);
-            setGuessResult(null);
-            return;
-        }
-        setSelectedCell({ row, col });
-        setSelectedNumber(null);
-        setGuessResult(null);
+        const isSelectedCell = selectedCell?.row === row && selectedCell?.col === col;
+        resetSelection();
+        if (!isSelectedCell) setSelectedCell({ row, col });
     };
 
     const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
@@ -60,6 +60,7 @@ function Sudoku() {
             next.set(key, toggleCandidate(prev.get(key) ?? [], candidate));
             return next;
         });
+        console.log(`row: ${selectedCell.row} col: ${selectedCell.col} candidates: ${candidates.get(key)}`); // remember to delete
     };
 
     const handleGuess = async (
@@ -78,14 +79,13 @@ function Sudoku() {
                 setPuzzle((prev) => (prev && prev.id === puzzle.id ? updatePuzzle(prev, guessRequest) : prev));
             }
             if (guessResponse.correct && guessResponse.solved) {
-                setSelectedCell(null);
-                setSelectedNumber(null);
-                setGuessResult(null);
+                resetSelection();
                 setCandidates(new Map());
                 setCandidatesMode(false);
                 setIsPuzzleSolved(true);
+            } else {
+                setGuessResult(guessResponse.correct);
             }
-            setGuessResult(guessResponse.correct);
         } catch (error) {
             console.error(`Failed to submit guess: ${error}`);
         }
@@ -98,9 +98,7 @@ function Sudoku() {
     ) => {
         try {
             setPuzzle(await createPuzzle(difficulty));
-            setSelectedCell(null);
-            setSelectedNumber(null);
-            setGuessResult(null);
+            resetSelection();
             setCandidates(new Map());
             setCandidatesMode(false);
             setIsPuzzleSolved(false);
