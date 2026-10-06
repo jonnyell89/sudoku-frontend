@@ -18,9 +18,9 @@
   border: 3px solid var(--border); /* outer edge of grid */
 }
 
-.grid.empty {
+/* .grid.empty {
   cursor: default;
-}
+} */
 
 .grid.solved {
   color: var(--text-h);
@@ -41,18 +41,19 @@
 
 /* .cell.given {} */
 
-.cell.selectable {
-  cursor: pointer;
-}
-
 .cell.selected {
   /* color: selected cell will never contain a value */
   background-color: var(--selected);
 }
 
-.cell.highlighted {
+.cell.highlighted-value {
   color: var(--text-h);
-  background-color: var(--highlighted);
+  background-color: var(--highlighted-value);
+}
+
+.cell.highlighted-unit {
+  color: var(--text-h);
+  background-color: var(--highlighted-unit);
 }
 
 .cell.correct {

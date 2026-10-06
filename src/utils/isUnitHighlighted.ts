@@ -1,7 +1,7 @@
 import type { SelectedCell } from "../interfaces/SelectedCell";
 import { isBoxEqual } from "./isBoxEqual";
 
-export function isHighlighted(
+export function isUnitHighlighted(
     row: number,
     col: number,
     selectedCell: SelectedCell | null,

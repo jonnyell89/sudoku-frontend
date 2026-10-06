@@ -4,22 +4,22 @@ import { buildBoxView } from "../utils/buildBoxView";
 
 interface GridProps {
     cellViews: CellView[][];
-    isEmpty: boolean;
-    isSolved: boolean;
+    isGridEmpty: boolean;
+    isPuzzleSolved: boolean;
     onSelect: (row: number, col: number) => void;
 }
 
 function Grid({
     cellViews,
-    isEmpty,
-    isSolved,
+    isGridEmpty,
+    isPuzzleSolved,
     onSelect,
 }: GridProps) {
 
     const className = [
         "grid",
-        isEmpty ? "empty" : "",
-        isSolved ? "solved" : "",
+        isGridEmpty ? "empty" : "",
+        isPuzzleSolved ? "solved" : "",
     ].filter(Boolean).join(" ");
 
     return (

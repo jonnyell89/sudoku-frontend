@@ -4,8 +4,9 @@
   --bg: var(--mono-7);
   --border: var(--mono-8);
   --cell: var(--mono-5);
-  --selected: var(--cell);
-  --highlighted: var(--mono-6);
+  --selected: var(--mono-5);
+  --highlighted-value: var(--mono-7);
+  --highlighted-unit: var(--mono-6);
   --correct: var(--green);
   --incorrect: var(--red);
   --button: var(--mono-5);

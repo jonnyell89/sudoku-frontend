@@ -12,6 +12,7 @@ import type { SelectedCell } from "../interfaces/SelectedCell";
 import { buildCellViews } from "../utils/buildCellViews";
 import { buildNumberViews } from "../utils/buildNumberViews";
 import { cellKey } from "../utils/cellKey";
+import { isCellFilled } from "../utils/isCellFilled";
 import { toggleCandidate } from "../utils/toggleCandidate";
 import { updatePuzzle } from "../utils/updatePuzzle";
 import ButtonPanel from "./ButtonPanel";
@@ -27,15 +28,15 @@ function Sudoku() {
     const [guessResult, setGuessResult] = useState<boolean | null>(null);
     const [candidates, setCandidates] = useState<Map<string, number[]>>(new Map());
     const [candidatesMode, setCandidatesMode] = useState<boolean>(false);
-    const [isSolved, setIsSolved] = useState<boolean>(false);
+    const [isPuzzleSolved, setIsPuzzleSolved] = useState<boolean>(false);
 
-    const isEmpty = puzzle === null;
+    const isGridEmpty = puzzle === null;
 
     const handleSelect = (
         row: number,
         col: number,
     ) => {
-        if (isEmpty || isSolved) return;
+        if (isGridEmpty || isPuzzleSolved) return;
         if (selectedCell?.row === row && selectedCell?.col === col) {
             setSelectedCell(null);
             setSelectedNumber(null);
@@ -52,7 +53,7 @@ function Sudoku() {
     const handleCandidate = (
         candidate: number,
     ) => {
-        if (isEmpty || !selectedCell || !candidatesMode) return;
+        if (isGridEmpty || !selectedCell || !candidatesMode || isCellFilled(puzzle.cells, selectedCell.row, selectedCell.col)) return;
         const key: string = cellKey(selectedCell.row, selectedCell.col);
         setCandidates((prev) => {
             const next = new Map(prev);
@@ -64,7 +65,7 @@ function Sudoku() {
     const handleGuess = async (
         guess: number,
     ) => {
-        if (isEmpty || !selectedCell || guessResult || isSolved) return;
+        if (isGridEmpty || !selectedCell || guessResult || isPuzzleSolved || isCellFilled(puzzle.cells, selectedCell.row, selectedCell.col)) return;
         setSelectedNumber(guess);
         const guessRequest: GuessRequest = {
             row: selectedCell.row,
@@ -82,7 +83,7 @@ function Sudoku() {
                 setGuessResult(null);
                 setCandidates(new Map());
                 setCandidatesMode(false);
-                setIsSolved(true);
+                setIsPuzzleSolved(true);
             }
             setGuessResult(guessResponse.correct);
         } catch (error) {
@@ -102,7 +103,7 @@ function Sudoku() {
             setGuessResult(null);
             setCandidates(new Map());
             setCandidatesMode(false);
-            setIsSolved(false);
+            setIsPuzzleSolved(false);
         } catch (error) {
             console.error(`Failed to fetch puzzle: ${error}`);
         }
@@ -111,16 +112,15 @@ function Sudoku() {
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
     const cellViews: CellView[][] = buildCellViews(
-        isEmpty,
         cells,
         selectedCell,
         selectedNumber,
         guessResult,
         candidates,
-        isSolved,
     );
 
     const numberViews: NumberView[] = buildNumberViews(
+        cells,
         selectedCell,
         selectedNumber,
         guessResult,
@@ -135,8 +135,8 @@ function Sudoku() {
             />
             <Grid
                 cellViews={cellViews}
-                isEmpty={isEmpty}
-                isSolved={isSolved}
+                isGridEmpty={isGridEmpty}
+                isPuzzleSolved={isPuzzleSolved}
                 onSelect={handleSelect}
             />
             <NumberSelector

@@ -13,18 +13,12 @@ function Cell({
     onSelect,
 }: CellProps) {
 
-    const handleClick = () => {
-        if (cellView.selectable) {
-            onSelect();
-        }
-    };
-
     const className = [
         "cell",
         cellView.given ? "given" : "",
-        cellView.selectable ? "selectable" : "",
         cellView.selected ? "selected" : "",
-        cellView.highlighted ? "highlighted" : "",
+        cellView.highlightedValue ? "highlighted-value" : "",
+        cellView.highlightedUnit ? "highlighted-unit" : "",
         cellView.guessStatus !== "none" ? cellView.guessStatus : "",
         boxView.boxRight ? "box-right" : "",
         boxView.boxBottom ? "box-bottom" : "",
@@ -33,7 +27,7 @@ function Cell({
     return (
         <div
             className={className}
-            onClick={handleClick}
+            onClick={() => onSelect()}
         >
             {cellView.value === 0 ? "" : cellView.value}
         </div>

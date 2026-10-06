@@ -2,28 +2,27 @@ import type { CellResponse } from "../interfaces/CellResponse";
 import type { CellView } from "../interfaces/CellView";
 import type { SelectedCell } from "../interfaces/SelectedCell";
 import { getCellCandidates } from "./getCellCandidates";
-import { isHighlighted } from "./isHighlighted";
+import { isUnitHighlighted } from "./isUnitHighlighted";
 import { resolveGuessStatus } from "./resolveGuessStatus";
 
 export function buildCellViews(
-    isEmpty: boolean,
     cells: CellResponse[][],
     selectedCell: SelectedCell | null,
     selectedNumber: number | null,
     guessResult: boolean | null,
     candidates: Map<string, number[]>,
-    isSolved: boolean,
 ): CellView[][] {
+    const selectedValue: number | null = selectedCell ? cells[selectedCell.row][selectedCell.col].value : 0;
     return cells.map((rows, row) => (
         rows.map((cell, col) => {
-            const isSelectable = !isEmpty && !isSolved && !cell.given;
             const isSelectedCell = selectedCell?.row === row && selectedCell?.col === col;
+            const isValueHighlighted = !isSelectedCell && selectedValue !== 0 && cell.value === selectedValue;
             return {
                 value: cell.value,
                 given: cell.given,
-                selectable: isSelectable,
                 selected: isSelectedCell,
-                highlighted: isHighlighted(row, col, selectedCell),
+                highlightedValue: isValueHighlighted,
+                highlightedUnit: isUnitHighlighted(row, col, selectedCell),
                 guessStatus: resolveGuessStatus(isSelectedCell, selectedNumber, guessResult),
                 candidates: getCellCandidates(row, col, candidates),
             };
