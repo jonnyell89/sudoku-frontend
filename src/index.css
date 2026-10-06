@@ -7,6 +7,7 @@
   --selected: var(--mono-5);
   --highlighted-value: var(--mono-7);
   --highlighted-unit: var(--mono-6);
+  --candidate: var(--mono-4);
   --correct: var(--green);
   --incorrect: var(--red);
   --button: var(--mono-5);

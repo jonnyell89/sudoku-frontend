@@ -58,9 +58,9 @@ function Sudoku() {
         setCandidates((prev) => {
             const next = new Map(prev);
             next.set(key, toggleCandidate(prev.get(key) ?? [], candidate));
+            console.log(`row: ${selectedCell.row} col: ${selectedCell.col} candidates: ${next.get(key)}`); // remember to delete
             return next;
         });
-        console.log(`row: ${selectedCell.row} col: ${selectedCell.col} candidates: ${candidates.get(key)}`); // remember to delete
     };
 
     const handleGuess = async (

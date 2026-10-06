@@ -1,5 +1,6 @@
 import type { BoxView } from "../interfaces/BoxView";
 import type { CellView } from "../interfaces/CellView";
+import CandidatesGrid from "./CandidatesGrid";
 
 interface CellProps {
     cellView: CellView;
@@ -29,7 +30,9 @@ function Cell({
             className={className}
             onClick={() => onSelect()}
         >
-            {cellView.value === 0 ? "" : cellView.value}
+            {cellView.candidates.length > 0
+                ? <CandidatesGrid candidates={cellView.candidates} />
+                : cellView.value === 0 ? "" : cellView.value}
         </div>
     );
 }
