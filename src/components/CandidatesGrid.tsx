@@ -1,4 +1,4 @@
-import { GRID_SIZE } from "../constants/sudoku";
+import { MAX_VALUE } from "../constants/sudoku";
 
 interface CandidatesGridProps {
     candidates: number[];
@@ -7,7 +7,9 @@ interface CandidatesGridProps {
 function CandidatesGrid({
     candidates,
 }: CandidatesGridProps) {
-    const numbers: number[] = Array.from({ length: GRID_SIZE }, (_, index) => index + 1);
+
+    const numbers: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
+
     return (
         <div className="candidates-grid">
             {numbers.map((number) => {

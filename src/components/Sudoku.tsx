@@ -77,6 +77,11 @@ function Sudoku() {
             const guessResponse: GuessResponse = await makeGuess(puzzle.id, guessRequest);
             if (guessResponse.correct) {
                 setPuzzle((prev) => (prev && prev.id === puzzle.id ? updatePuzzle(prev, guessRequest) : prev));
+                setCandidates((prev) => {
+                    const next = new Map(prev);
+                    next.delete(cellKey(guessRequest.row, guessRequest.col));
+                    return next;
+                });
             }
             if (guessResponse.correct && guessResponse.solved) {
                 resetSelection();

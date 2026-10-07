@@ -30,9 +30,11 @@ function Cell({
             className={className}
             onClick={() => onSelect()}
         >
-            {cellView.candidates.length > 0
-                ? <CandidatesGrid candidates={cellView.candidates} />
-                : cellView.value === 0 ? "" : cellView.value}
+            {cellView.value !== 0
+                ? cellView.value
+                : cellView.candidates.length > 0
+                    ? <CandidatesGrid candidates={cellView.candidates} />
+                    : ""}
         </div>
     );
 }
