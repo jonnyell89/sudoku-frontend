@@ -114,13 +114,13 @@ function Sudoku() {
 
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
-    const cellViews: CellView[][] = buildCellViews(
+    const cellViews: CellView[][] = buildCellViews({
         cells,
         selectedCell,
         selectedNumber,
         guessResult,
         candidates,
-    );
+    });
 
     const numberViews: NumberView[] = buildNumberViews(
         cells,

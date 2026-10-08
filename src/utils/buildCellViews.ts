@@ -1,18 +1,17 @@
-import type { CellResponse } from "../interfaces/CellResponse";
 import type { CellView } from "../interfaces/CellView";
-import type { SelectedCell } from "../interfaces/SelectedCell";
+import type { CellViewParams } from "../interfaces/CellViewParams";
 import { getCellCandidates } from "./getCellCandidates";
 import { isUnitHighlighted } from "./isUnitHighlighted";
 import { resolveDisplayValue } from "./resolveDisplayValue";
 import { resolveGuessStatus } from "./resolveGuessStatus";
 
-export function buildCellViews(
-    cells: CellResponse[][],
-    selectedCell: SelectedCell | null,
-    selectedNumber: number | null,
-    guessResult: boolean | null,
-    candidates: Map<string, number[]>,
-): CellView[][] {
+export function buildCellViews({
+    cells,
+    selectedCell,
+    selectedNumber,
+    guessResult,
+    candidates,
+}: CellViewParams): CellView[][] {
     const selectedCellValue: number = selectedCell ? cells[selectedCell.row][selectedCell.col].value : 0;
     return cells.map((rows, row) => (
         rows.map((cell, col) => {
