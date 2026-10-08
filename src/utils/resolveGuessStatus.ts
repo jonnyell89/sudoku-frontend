@@ -1,7 +1,7 @@
 export type GuessStatus = "none" | "correct" | "incorrect";
 
 export function resolveGuessStatus(
-    isSelected: boolean,
+    isSelected: boolean | null,
     selectedNumber: number | null,
     guessResult: boolean | null,
 ): GuessStatus {
