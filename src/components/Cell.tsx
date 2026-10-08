@@ -18,9 +18,10 @@ function Cell({
         "cell",
         cellView.given ? "given" : "",
         cellView.selected ? "selected" : "",
-        cellView.highlightedValue ? "highlighted-value" : "",
-        cellView.highlightedUnit ? "highlighted-unit" : "",
         cellView.guessStatus !== "none" ? cellView.guessStatus : "",
+        cellView.highlightUnit ? "highlight-unit" : "",
+        cellView.highlightSameValue ? "highlight-same-value" : "",
+        cellView.highlightSameIncorrectValue ? "highlight-same-incorrect-value" : "",
         boxView.boxRight ? "box-right" : "",
         boxView.boxBottom ? "box-bottom" : "",
     ].filter(Boolean).join(" ");

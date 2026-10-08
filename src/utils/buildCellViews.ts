@@ -13,19 +13,23 @@ export function buildCellViews({
     candidates,
 }: CellViewParams): CellView[][] {
     const selectedCellValue: number = selectedCell ? cells[selectedCell.row][selectedCell.col].value : 0;
+    const isGuessCorrect: boolean = selectedCell !== null && selectedNumber !== null && guessResult === true;
     return cells.map((rows, row) => (
         rows.map((cell, col) => {
             const isSelectedCell = selectedCell?.row === row && selectedCell?.col === col;
-            const isValueHighlighted = !isSelectedCell && selectedCellValue !== 0 && cell.value === selectedCellValue;
             const guessStatus = resolveGuessStatus(isSelectedCell, selectedNumber, guessResult);
+            const highlightUnit = isUnitHighlighted(row, col, selectedCell);
+            const highlightSameValue = !isSelectedCell && selectedCellValue !== 0 && cell.value === selectedCellValue;
+            const highlightSameIncorrectValue = !isGuessCorrect && highlightUnit && cell.value === selectedNumber;
             return {
                 value: resolveDisplayValue(cell.value, guessStatus, selectedNumber),
                 given: cell.given,
                 selected: isSelectedCell,
-                highlightedValue: isValueHighlighted,
-                highlightedUnit: isUnitHighlighted(row, col, selectedCell),
                 guessStatus: guessStatus,
                 candidates: getCellCandidates(row, col, candidates),
+                highlightUnit: highlightUnit,
+                highlightSameValue: highlightSameValue,
+                highlightSameIncorrectValue: highlightSameIncorrectValue,
             };
         })
     ));

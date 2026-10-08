@@ -5,8 +5,9 @@
   --border: var(--mono-8);
   --cell: var(--mono-5);
   --selected: var(--mono-5);
-  --highlighted-value: var(--mono-7);
-  --highlighted-unit: var(--mono-6);
+  --highlight-unit: var(--mono-6);
+  --highlight-same-value: var(--mono-7);
+  --highlight-same-incorrect-value: var(--red-light);
   --candidate: var(--mono-4);
   --correct: var(--green);
   --incorrect: var(--red);

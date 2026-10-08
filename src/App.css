@@ -40,18 +40,23 @@
 /* .cell.given {} */
 
 .cell.selected {
-  /* color: selected cell will never contain a value */
+  color: var(--text);
   background-color: var(--selected);
 }
 
-.cell.highlighted-value {
+.cell.highlight-unit {
   color: var(--text-h);
-  background-color: var(--highlighted-value);
+  background-color: var(--highlight-unit);
 }
 
-.cell.highlighted-unit {
+.cell.highlight-same-value {
   color: var(--text-h);
-  background-color: var(--highlighted-unit);
+  background-color: var(--highlight-same-value);
+}
+
+.cell.highlight-same-incorrect-value {
+  color: var(--text-h);
+  background-color: var(--highlight-same-incorrect-value);
 }
 
 .cell.correct {
@@ -60,7 +65,7 @@
 }
 
 .cell.incorrect {
-  /* color: incorrect cell will never contain a value */
+  color: var(--text-h);
   background-color: var(--incorrect);
 }
 
