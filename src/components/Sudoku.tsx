@@ -122,14 +122,14 @@ function Sudoku() {
         candidates,
     });
 
-    const numberViews: NumberView[] = buildNumberViews(
+    const numberViews: NumberView[] = buildNumberViews({
         cells,
         selectedCell,
         selectedNumber,
         guessResult,
         candidates,
         candidatesMode,
-    );
+    });
 
     return (
         <div className="sudoku">

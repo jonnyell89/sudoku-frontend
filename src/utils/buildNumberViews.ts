@@ -1,20 +1,19 @@
 import { MAX_VALUE } from "../constants/sudoku";
-import type { CellResponse } from "../interfaces/CellResponse";
 import type { NumberView } from "../interfaces/NumberView";
-import type { SelectedCell } from "../interfaces/SelectedCell";
+import type { NumberViewParams } from "../interfaces/NumberViewParams";
 import { isCellCandidate } from "./isCellCandidate";
 import { isCellFilled } from "./isCellFilled";
 import { resolveGuessStatus } from "./resolveGuessStatus";
 import { resolveNumberStatus } from "./resolveNumberStatus";
 
-export function buildNumberViews(
-    cells: CellResponse[][],
-    selectedCell: SelectedCell | null,
-    selectedNumber: number | null,
-    guessResult: boolean | null,
-    candidates: Map<string, number[]>,
-    candidatesMode: boolean,
-): NumberView[] {
+export function buildNumberViews({
+    cells,
+    selectedCell,
+    selectedNumber,
+    guessResult,
+    candidates,
+    candidatesMode,
+}: NumberViewParams): NumberView[] {
     const numbers: number[] = Array.from({ length: MAX_VALUE }, (_, index) => index + 1);
     const isActive = selectedCell !== null && !isCellFilled(cells, selectedCell.row, selectedCell.col);
     return numbers.map((number) => {
