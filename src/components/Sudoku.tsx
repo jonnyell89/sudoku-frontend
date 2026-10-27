@@ -22,6 +22,7 @@ import NumberSelector from "./NumberSelector";
 
 function Sudoku() {
 
+    /* State hooks */
     const [puzzle, setPuzzle] = useState<PuzzleResponse | null>(null);
     const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
     const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
@@ -30,12 +31,29 @@ function Sudoku() {
     const [candidatesMode, setCandidatesMode] = useState<boolean>(false);
     const [isPuzzleSolved, setIsPuzzleSolved] = useState<boolean>(false);
 
+    /* Derived values */
     const isGridEmpty = puzzle === null;
 
+    /* Internal helpers */
     const resetSelection = () => {
         setSelectedCell(null);
         setSelectedNumber(null);
         setGuessResult(null);
+    };
+
+    /* Event handlers */
+    const handleDifficulty = async (
+        difficulty: string,
+    ) => {
+        try {
+            setPuzzle(await createPuzzle(difficulty));
+            resetSelection();
+            setCandidates(new Map());
+            setCandidatesMode(false);
+            setIsPuzzleSolved(false);
+        } catch (error) {
+            console.error(`Failed to fetch puzzle: ${error}`);
+        }
     };
 
     const handleSelect = (
@@ -48,8 +66,6 @@ function Sudoku() {
         if (!isSelectedCell) setSelectedCell({ row, col });
     };
 
-    const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
-
     const handleCandidate = (
         candidate: number,
     ) => {
@@ -58,7 +74,6 @@ function Sudoku() {
         setCandidates((prev) => {
             const next = new Map(prev);
             next.set(key, toggleCandidate(prev.get(key) ?? [], candidate));
-            console.log(`row: ${selectedCell.row} col: ${selectedCell.col} candidates: ${next.get(key)}`); // remember to delete
             return next;
         });
     };
@@ -98,20 +113,9 @@ function Sudoku() {
 
     const handleNumber = candidatesMode ? handleCandidate : handleGuess;
 
-    const handleDifficulty = async (
-        difficulty: string,
-    ) => {
-        try {
-            setPuzzle(await createPuzzle(difficulty));
-            resetSelection();
-            setCandidates(new Map());
-            setCandidatesMode(false);
-            setIsPuzzleSolved(false);
-        } catch (error) {
-            console.error(`Failed to fetch puzzle: ${error}`);
-        }
-    };
+    const handleCandidatesMode = () => setCandidatesMode((prev) => !prev);
 
+    /* Values computed for rendering */
     const cells: CellResponse[][] = puzzle ? puzzle.cells : EMPTY_CELLS;
 
     const cellViews: CellView[][] = buildCellViews({
