@@ -7,15 +7,15 @@ describe("toggleCandidate", () => {
         expect(toggleCandidate([], 5)).toEqual([5]);
     });
 
-    it("inserts in sorted position", () => {
-        expect(toggleCandidate([2, 7], 5)).toEqual([2, 5, 7]);
-    });
-
     it("removes a candidate when present", () => {
         expect(toggleCandidate([2, 5, 7], 5)).toEqual([2, 7]);
     });
 
-    it("returns a sorted array regardless of insertion", () => {
+    it("keeps the candidates in ascending order when adding", () => {
+        expect(toggleCandidate([2, 7], 5)).toEqual([2, 5, 7]);
+    });
+
+    it("sorts unordered candidates when adding", () => {
         expect(toggleCandidate([9, 1], 5)).toEqual([1, 5, 9]);
     });
 
@@ -25,7 +25,7 @@ describe("toggleCandidate", () => {
         expect(input).toEqual([2, 7]);
     });
 
-    it("empties the array when removing the last candidate", () => {
+    it("returns an empty array when removing the last candidate", () => {
         expect(toggleCandidate([5], 5)).toEqual([]);
     });
 });
